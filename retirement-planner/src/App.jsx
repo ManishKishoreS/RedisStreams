@@ -4,17 +4,14 @@ import { Step1Profile } from './pages/Step1Profile.jsx'
 import { Step2Income } from './pages/Step2Income.jsx'
 import { Step3Expenses } from './pages/Step3Expenses.jsx'
 import { Step4Scenarios } from './pages/Step4Scenarios.jsx'
-import { Step5Results } from './pages/Step5Results.jsx'
+import Step5Results from './pages/Step5Results.jsx'
 
 const STEPS = [Step1Profile, Step2Income, Step3Expenses, Step4Scenarios, Step5Results]
 
 export default function App() {
   const { currentStep, setStep, darkMode, toggleDarkMode } = useStore()
 
-  const next = () => setStep(Math.min(STEPS.length - 1, currentStep + 1))
-  const back = () => setStep(Math.max(0, currentStep - 1))
-
-  const StepComponent = STEPS[currentStep]
+  const StepComponent = STEPS[currentStep] || Step1Profile
 
   return (
     <div className={darkMode ? 'dark' : ''}>
@@ -47,12 +44,12 @@ export default function App() {
         <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
           <ProgressBar currentStep={currentStep} />
           <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 sm:p-8">
-            <StepComponent onNext={next} onBack={back} />
+            <StepComponent />
           </div>
         </main>
 
         <footer className="text-center py-6 text-xs text-gray-400 dark:text-gray-600">
-          RetireSmart is for educational purposes only. Not financial advice. All calculations use your inputs and standard actuarial assumptions.
+          RetireSmart is for educational purposes only. Not financial advice.
         </footer>
       </div>
     </div>
