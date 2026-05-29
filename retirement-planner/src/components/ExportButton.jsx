@@ -50,16 +50,14 @@ export default function ExportButton() {
     const { jsPDF } = await import('jspdf')
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
 
-    // Title
     doc.setFontSize(20)
-    doc.setTextColor(79, 70, 229)
+    doc.setTextColor(99, 102, 241)
     doc.text('Retirement Planning Report', 20, 20)
 
     doc.setFontSize(10)
     doc.setTextColor(100, 100, 100)
     doc.text(`Generated on ${new Date().toLocaleDateString()} | Country: ${profile.country}`, 20, 28)
 
-    // Summary
     doc.setFontSize(14)
     doc.setTextColor(30, 30, 30)
     doc.text('Summary', 20, 42)
@@ -94,7 +92,6 @@ export default function ExportButton() {
       y += 7
     })
 
-    // Suggestions
     if (results.suggestions?.length > 0) {
       y += 8
       doc.setFontSize(14)
@@ -115,14 +112,18 @@ export default function ExportButton() {
   }
 
   return (
-    <div className="flex gap-3">
-      <button onClick={exportCSV}
-        className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm font-medium transition-colors">
-        <span>📊</span> Export CSV
+    <div className="flex gap-2">
+      <button
+        onClick={exportCSV}
+        className="flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white text-xs font-medium transition-all"
+      >
+        📊 CSV
       </button>
-      <button onClick={exportPDF}
-        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition-colors">
-        <span>📄</span> Export PDF
+      <button
+        onClick={exportPDF}
+        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition-all shadow-lg shadow-indigo-500/20"
+      >
+        📄 PDF
       </button>
     </div>
   )

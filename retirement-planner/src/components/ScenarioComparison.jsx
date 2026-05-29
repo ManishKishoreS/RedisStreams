@@ -4,12 +4,13 @@ import { runMonteCarlo } from '../calculators/monteCarlo.js'
 import { CURRENCY_SYMBOLS, DEFAULT_RETURNS } from '../data/defaults.js'
 
 function fmt(v, sym) {
-  if (!v) return `${sym}0`
-  if (v >= 1e7) return `${sym}${(v / 1e7).toFixed(1)}Cr`
-  if (v >= 1e5) return `${sym}${(v / 1e5).toFixed(1)}L`
-  if (v >= 1e6) return `${sym}${(v / 1e6).toFixed(1)}M`
-  if (v >= 1e3) return `${sym}${(v / 1e3).toFixed(0)}K`
-  return `${sym}${Math.round(v)}`
+  if (!v && v !== 0) return `${sym}0`
+  const abs = Math.abs(v)
+  if (abs >= 1e7) return `${sym}${(abs / 1e7).toFixed(1)}Cr`
+  if (abs >= 1e6) return `${sym}${(abs / 1e6).toFixed(1)}M`
+  if (abs >= 1e5) return `${sym}${(abs / 1e5).toFixed(1)}L`
+  if (abs >= 1e3) return `${sym}${(abs / 1e3).toFixed(0)}K`
+  return `${sym}${Math.round(abs)}`
 }
 
 export default function ScenarioComparison() {
@@ -42,77 +43,76 @@ export default function ScenarioComparison() {
         inflationRate: exp.generalInflation || 0.06,
       }, 200)
 
-      return {
-        ...proj,
-        successRate: mc.successRate * 100,
-      }
+      return { ...proj, successRate: mc.successRate * 100 }
     } catch {
       return null
     }
   }
 
-  return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
-      <h3 className="text-base font-semibold text-gray-800 dark:text-gray-100 mb-4">Scenario Comparison</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {/* Base case */}
-        {results && (
-          <div className="rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-900/20 p-4">
-            <h4 className="font-semibold text-indigo-700 dark:text-indigo-300 text-sm mb-3">Base Case</h4>
-            <dl className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <dt className="text-gray-500 dark:text-gray-400">Projected Corpus</dt>
-                <dd className="font-semibold text-gray-900 dark:text-white">{fmt(results.projectedCorpus, sym)}</dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-gray-500 dark:text-gray-400">Required Corpus</dt>
-                <dd className="font-semibold text-gray-900 dark:text-white">{fmt(results.requiredCorpus, sym)}</dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-gray-500 dark:text-gray-400">Surplus</dt>
-                <dd className={`font-semibold ${results.surplus >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {results.surplus >= 0 ? '+' : ''}{fmt(results.surplus, sym)}
-                </dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-gray-500 dark:text-gray-400">MC Success</dt>
-                <dd className="font-semibold text-gray-900 dark:text-white">{results.monteCarlo?.successRate ? (results.monteCarlo.successRate * 100).toFixed(0) : '--'}%</dd>
-              </div>
-            </dl>
-          </div>
-        )}
+  const baseCard = results ? {
+    name: 'Base Case',
+    projectedCorpus: results.projectedCorpus,
+    requiredCorpus: results.requiredCorpus,
+    surplus: results.surplus,
+    successRate: results.monteCarlo?.successRate ? results.monteCarlo.successRate * 100 : 0,
+    isBase: true,
+  } : null
 
-        {scenarios.map(sc => {
-          const res = computeScenario(sc)
-          if (!res) return null
-          const isGood = res.surplus >= 0
+  const allCards = [
+    ...(baseCard ? [baseCard] : []),
+    ...scenarios.map(sc => {
+      const res = computeScenario(sc)
+      if (!res) return null
+      return { ...res, name: sc.name, isBase: false }
+    }).filter(Boolean),
+  ]
+
+  return (
+    <div className="rounded-2xl bg-slate-800 border border-slate-700 p-6">
+      <h3 className="font-semibold text-white mb-5">Scenario Comparison</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {allCards.map((card, i) => {
+          const isGood = card.surplus >= 0
+          const borderColor = card.isBase ? 'border-indigo-500/40' : isGood ? 'border-emerald-500/40' : 'border-red-500/40'
+          const bgColor = card.isBase ? 'bg-indigo-500/5' : isGood ? 'bg-emerald-500/5' : 'bg-red-500/5'
+          const titleColor = card.isBase ? 'text-indigo-300' : isGood ? 'text-emerald-300' : 'text-red-300'
+          const surplusColor = isGood ? 'text-emerald-400' : 'text-red-400'
+
           return (
-            <div key={sc.id} className={`rounded-xl border p-4 ${isGood ? 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20' : 'border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20'}`}>
-              <h4 className={`font-semibold text-sm mb-3 ${isGood ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'}`}>{sc.name}</h4>
-              <dl className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <dt className="text-gray-500 dark:text-gray-400">Projected Corpus</dt>
-                  <dd className="font-semibold text-gray-900 dark:text-white">{fmt(res.projectedCorpus, sym)}</dd>
-                </div>
-                <div className="flex justify-between">
-                  <dt className="text-gray-500 dark:text-gray-400">Required Corpus</dt>
-                  <dd className="font-semibold text-gray-900 dark:text-white">{fmt(res.requiredCorpus, sym)}</dd>
-                </div>
-                <div className="flex justify-between">
-                  <dt className="text-gray-500 dark:text-gray-400">Surplus</dt>
-                  <dd className={`font-semibold ${isGood ? 'text-green-600' : 'text-red-600'}`}>
-                    {res.surplus >= 0 ? '+' : ''}{fmt(res.surplus, sym)}
+            <div key={i} className={`rounded-xl border ${borderColor} ${bgColor} p-4`}>
+              <div className="flex items-center justify-between mb-4">
+                <h4 className={`font-bold text-sm ${titleColor}`}>{card.name}</h4>
+                <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
+                  card.successRate >= 80 ? 'bg-emerald-500/10 text-emerald-400' :
+                  card.successRate >= 50 ? 'bg-amber-500/10 text-amber-400' :
+                  'bg-red-500/10 text-red-400'
+                }`}>
+                  {card.successRate.toFixed(0)}% success
+                </span>
+              </div>
+              <dl className="space-y-2.5">
+                <DataRow label="Projected" value={fmt(card.projectedCorpus, sym)} sym={sym} />
+                <DataRow label="Required" value={fmt(card.requiredCorpus, sym)} sym={sym} />
+                <div className="flex justify-between items-center pt-1 border-t border-slate-700">
+                  <dt className="text-xs text-slate-500">{isGood ? 'Surplus' : 'Shortfall'}</dt>
+                  <dd className={`text-sm font-bold tabular-nums ${surplusColor}`}>
+                    {isGood ? '+' : '-'}{fmt(Math.abs(card.surplus), sym)}
                   </dd>
-                </div>
-                <div className="flex justify-between">
-                  <dt className="text-gray-500 dark:text-gray-400">MC Success</dt>
-                  <dd className="font-semibold text-gray-900 dark:text-white">{res.successRate.toFixed(0)}%</dd>
                 </div>
               </dl>
             </div>
           )
         })}
       </div>
+    </div>
+  )
+}
+
+function DataRow({ label, value }) {
+  return (
+    <div className="flex justify-between items-center">
+      <dt className="text-xs text-slate-500">{label}</dt>
+      <dd className="text-sm font-semibold text-white tabular-nums">{value}</dd>
     </div>
   )
 }

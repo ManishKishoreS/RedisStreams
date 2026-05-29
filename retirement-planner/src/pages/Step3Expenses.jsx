@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useStore } from '../store/useStore.js'
-import { Tooltip } from '../components/Tooltip.jsx'
 import { CURRENCY_SYMBOLS } from '../data/defaults.js'
 
 export function Step3Expenses({ onNext, onBack }) {
@@ -15,79 +14,196 @@ export function Step3Expenses({ onNext, onBack }) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-slide-up">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Expenses & Inflation</h2>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">Model your spending and inflation assumptions</p>
+        <h2 className="text-2xl font-bold text-white">Expenses &amp; Inflation</h2>
+        <p className="text-slate-400 mt-1">Model your spending and inflation assumptions</p>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-5">
-        <Field label={`Current Monthly Expenses (${sym})`} htmlFor="mthExp">
-          <input id="mthExp" type="number" min={0} value={expenses.monthlyExpenses}
-            onChange={e => setExpenses({ monthlyExpenses: Number(e.target.value) })} className="input-field" />
-        </Field>
-
-        <Field label={<Tooltip text="Annual rate at which general living costs rise">General Inflation Rate (%)</Tooltip>} htmlFor="genInfl">
-          <input id="genInfl" type="number" min={0} max={20} step={0.5} value={(expenses.generalInflation * 100).toFixed(1)}
-            onChange={e => setExpenses({ generalInflation: Number(e.target.value) / 100 })} className="input-field" />
-        </Field>
-
-        <Field label={<Tooltip text="Healthcare costs typically rise faster — often 13–14% p.a. in India, 5–6% in US/UK">Medical Inflation Rate (%)</Tooltip>} htmlFor="medInfl">
-          <input id="medInfl" type="number" min={0} max={25} step={0.5} value={(expenses.medicalInflation * 100).toFixed(1)}
-            onChange={e => setExpenses({ medicalInflation: Number(e.target.value) / 100 })} className="input-field" />
-        </Field>
-
-        <Field label={<Tooltip text="What fraction of your monthly expenses is healthcare / medical">Medical Expense Share (%)</Tooltip>} htmlFor="medShare">
-          <input id="medShare" type="number" min={0} max={100} step={1} value={Math.round(expenses.medicalExpenseRatio * 100)}
-            onChange={e => setExpenses({ medicalExpenseRatio: Number(e.target.value) / 100 })} className="input-field" />
-        </Field>
-      </div>
-
-      <div>
-        <h3 className="text-base font-semibold text-gray-800 dark:text-gray-200 mb-4 pb-2 border-b border-gray-100 dark:border-gray-700">
-          One-Time Future Expenses
-        </h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Add lump-sum expenses like education, wedding, home renovation, travel</p>
-        <div className="flex gap-3 flex-wrap mb-4">
-          <input placeholder="Label (e.g. Child's college)" value={ote.label}
-            onChange={e => setOte(p => ({ ...p, label: e.target.value }))}
-            className="input-field flex-1 min-w-0" />
-          <input type="number" placeholder={`Amount (${sym})`} value={ote.amount}
-            onChange={e => setOte(p => ({ ...p, amount: e.target.value }))}
-            className="input-field w-40" />
-          <input type="number" placeholder="Your age at event" min={profile.age} max={profile.retirementAge + 5} value={ote.year}
-            onChange={e => setOte(p => ({ ...p, year: e.target.value }))}
-            className="input-field w-36" />
-          <button onClick={addOte} className="btn-secondary whitespace-nowrap">+ Add</button>
+      {/* Monthly Expenses */}
+      <div className="rounded-2xl bg-slate-800 border border-slate-700 p-6">
+        <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-700">
+          <span className="text-xl">💳</span>
+          <div>
+            <h3 className="font-semibold text-white text-base">Monthly Expenses</h3>
+            <p className="text-xs text-slate-500">Your current total monthly spend</p>
+          </div>
         </div>
-        {expenses.oneTimeExpenses.length > 0 && (
+        <div className="flex items-center rounded-xl border border-slate-700 bg-slate-900 overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 max-w-xs">
+          <span className="px-3 py-3 text-slate-400 font-medium text-sm border-r border-slate-700 bg-slate-800">{sym}</span>
+          <input
+            id="mthExp"
+            type="number"
+            min={0}
+            value={expenses.monthlyExpenses}
+            onChange={e => setExpenses({ monthlyExpenses: Number(e.target.value) })}
+            className="flex-1 bg-transparent text-white px-3 py-3 text-sm focus:outline-none tabular-nums"
+          />
+        </div>
+      </div>
+
+      {/* Inflation sliders */}
+      <div className="rounded-2xl bg-slate-800 border border-slate-700 p-6">
+        <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-700">
+          <span className="text-xl">📉</span>
+          <div>
+            <h3 className="font-semibold text-white text-base">Inflation Assumptions</h3>
+            <p className="text-xs text-slate-500">How costs will rise over time</p>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <SliderField
+            label="General Inflation Rate"
+            hint="Annual rate at which general living costs rise"
+            value={expenses.generalInflation * 100}
+            min={0}
+            max={20}
+            step={0.5}
+            onChange={v => setExpenses({ generalInflation: v / 100 })}
+            color="indigo"
+            suffix="%"
+          />
+          <SliderField
+            label="Medical Inflation Rate"
+            hint="Healthcare costs rise faster — 13-14% in India, 5-6% in US/UK"
+            value={expenses.medicalInflation * 100}
+            min={0}
+            max={25}
+            step={0.5}
+            onChange={v => setExpenses({ medicalInflation: v / 100 })}
+            color="amber"
+            suffix="%"
+          />
+          <SliderField
+            label="Medical Expense Share"
+            hint="Fraction of monthly expenses that is healthcare/medical"
+            value={expenses.medicalExpenseRatio * 100}
+            min={0}
+            max={100}
+            step={1}
+            onChange={v => setExpenses({ medicalExpenseRatio: v / 100 })}
+            color="emerald"
+            suffix="%"
+          />
+        </div>
+      </div>
+
+      {/* One-time expenses */}
+      <div className="rounded-2xl bg-slate-800 border border-slate-700 p-6">
+        <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-700">
+          <span className="text-xl">🏠</span>
+          <div>
+            <h3 className="font-semibold text-white text-base">One-Time Future Expenses</h3>
+            <p className="text-xs text-slate-500">Education, wedding, home renovation, travel...</p>
+          </div>
+        </div>
+
+        <div className="flex gap-3 flex-wrap mb-5">
+          <input
+            placeholder="Label (e.g. Child's college)"
+            value={ote.label}
+            onChange={e => setOte(p => ({ ...p, label: e.target.value }))}
+            className="input-field flex-1 min-w-[160px]"
+          />
+          <div className="flex items-center rounded-xl border border-slate-700 bg-slate-900 overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 w-40">
+            <span className="px-3 text-slate-400 text-sm border-r border-slate-700 bg-slate-800 py-3">{sym}</span>
+            <input
+              type="number"
+              placeholder="Amount"
+              value={ote.amount}
+              onChange={e => setOte(p => ({ ...p, amount: e.target.value }))}
+              className="flex-1 bg-transparent text-white px-2 py-3 text-sm focus:outline-none w-20 tabular-nums"
+            />
+          </div>
+          <div className="flex items-center rounded-xl border border-slate-700 bg-slate-900 overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 w-32">
+            <input
+              type="number"
+              placeholder="Your age"
+              min={profile.age}
+              max={profile.retirementAge + 5}
+              value={ote.year}
+              onChange={e => setOte(p => ({ ...p, year: e.target.value }))}
+              className="flex-1 bg-transparent text-white px-3 py-3 text-sm focus:outline-none tabular-nums"
+            />
+            <span className="px-2 text-slate-500 text-xs">yrs</span>
+          </div>
+          <button
+            onClick={addOte}
+            className="px-4 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-all whitespace-nowrap"
+          >
+            + Add
+          </button>
+        </div>
+
+        {expenses.oneTimeExpenses.length > 0 ? (
           <ul className="space-y-2">
             {expenses.oneTimeExpenses.map(e => (
-              <li key={e.id} className="flex items-center justify-between bg-gray-50 dark:bg-gray-700/50 rounded-xl px-4 py-3">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{e.label}</span>
-                <span className="text-sm text-gray-500 dark:text-gray-400 mx-4">Age {e.year}</span>
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">{sym}{Number(e.amount).toLocaleString()}</span>
-                <button onClick={() => removeOneTimeExpense(e.id)}
-                  className="ml-3 text-red-400 hover:text-red-600 dark:hover:text-red-400 text-lg leading-none" aria-label="Remove expense">×</button>
+              <li key={e.id} className="flex items-center gap-4 rounded-xl bg-slate-900 border border-slate-700 px-4 py-3 group">
+                <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xs">💸</span>
+                </div>
+                <span className="flex-1 text-sm font-medium text-white">{e.label}</span>
+                <span className="text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded-full">Age {e.year}</span>
+                <span className="text-sm font-semibold text-emerald-400 tabular-nums">{sym}{Number(e.amount).toLocaleString()}</span>
+                <button
+                  onClick={() => removeOneTimeExpense(e.id)}
+                  className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-red-500/10 border border-slate-700 hover:border-red-500/30 text-slate-500 hover:text-red-400 transition-all flex items-center justify-center text-sm"
+                  aria-label="Remove expense"
+                >
+                  ×
+                </button>
               </li>
             ))}
           </ul>
+        ) : (
+          <p className="text-sm text-slate-600 italic text-center py-4">No one-time expenses added yet</p>
         )}
       </div>
 
       <div className="flex gap-3 pt-2">
         <button onClick={onBack} className="btn-secondary">← Back</button>
-        <button onClick={onNext} className="btn-primary">Continue → Scenarios</button>
+        <button onClick={onNext} className="btn-primary">Continue — Scenarios →</button>
       </div>
     </div>
   )
 }
 
-function Field({ label, htmlFor, children }) {
+function SliderField({ label, hint, value, min, max, step, onChange, color, suffix }) {
+  const colorMap = {
+    indigo: { track: 'bg-indigo-500', text: 'text-indigo-400', bg: 'bg-indigo-500/10' },
+    amber: { track: 'bg-amber-500', text: 'text-amber-400', bg: 'bg-amber-500/10' },
+    emerald: { track: 'bg-emerald-500', text: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+  }
+  const c = colorMap[color] || colorMap.indigo
+  const pct = ((value - min) / (max - min)) * 100
+
   return (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor={htmlFor} className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
-      {children}
+    <div>
+      <div className="flex justify-between items-start mb-2">
+        <div>
+          <span className="text-sm font-semibold text-slate-300">{label}</span>
+          {hint && <p className="text-xs text-slate-500 mt-0.5">{hint}</p>}
+        </div>
+        <span className={`text-lg font-bold tabular-nums ${c.text} ${c.bg} px-2.5 py-0.5 rounded-lg`}>
+          {parseFloat(value.toFixed(1))}{suffix}
+        </span>
+      </div>
+      <div className="relative">
+        <input
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          onChange={e => onChange(parseFloat(e.target.value))}
+          className="w-full"
+        />
+      </div>
+      <div className="flex justify-between text-xs text-slate-600 mt-1">
+        <span>{min}{suffix}</span>
+        <span>{max}{suffix}</span>
+      </div>
     </div>
   )
 }

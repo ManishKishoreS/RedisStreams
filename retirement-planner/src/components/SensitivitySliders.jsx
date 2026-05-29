@@ -1,7 +1,9 @@
 import { useStore } from '../store/useStore.js'
+import { CURRENCY_SYMBOLS } from '../data/defaults.js'
 
 export default function SensitivitySliders() {
-  const { profile, income, expenses, setProfile, setExpenses, setAssumptions, assumptions, compute } = useStore()
+  const { profile, income, expenses, setProfile, setExpenses, setAssumptions, setIncome, assumptions, compute } = useStore()
+  const sym = CURRENCY_SYMBOLS[profile.country] || '₹'
 
   const handleChange = (updater) => {
     updater()
@@ -9,78 +11,88 @@ export default function SensitivitySliders() {
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 space-y-5">
-      <h3 className="text-base font-semibold text-gray-800 dark:text-gray-100">Sensitivity Analysis</h3>
-      <p className="text-xs text-gray-500 dark:text-gray-400">Adjust sliders to see real-time impact on your retirement plan.</p>
-
+    <div className="rounded-2xl bg-slate-800 border border-slate-700 p-6 space-y-6">
       <div>
-        <div className="flex justify-between text-sm mb-1">
-          <span className="text-gray-600 dark:text-gray-400">Retirement Age</span>
-          <span className="font-semibold text-indigo-600 dark:text-indigo-400">{profile.retirementAge}</span>
-        </div>
-        <input type="range" min={profile.age + 1} max={profile.age + 15} value={profile.retirementAge}
-          onChange={e => handleChange(() => setProfile({ retirementAge: parseInt(e.target.value) }))}
-          className="w-full accent-indigo-600" />
-        <div className="flex justify-between text-xs text-gray-400 mt-1">
-          <span>{profile.age + 1}</span>
-          <span>{profile.age + 15}</span>
-        </div>
+        <h3 className="font-semibold text-white">Sensitivity Analysis</h3>
+        <p className="text-xs text-slate-500 mt-1">Adjust sliders to see real-time impact on your plan</p>
       </div>
 
-      <div>
-        <div className="flex justify-between text-sm mb-1">
-          <span className="text-gray-600 dark:text-gray-400">Monthly Expenses</span>
-          <span className="font-semibold text-indigo-600 dark:text-indigo-400">
-            {Math.round(expenses.monthlyExpenses).toLocaleString()}
-          </span>
-        </div>
-        <input type="range"
-          min={Math.round(expenses.monthlyExpenses * 0.8)}
-          max={Math.round(expenses.monthlyExpenses * 1.2)}
-          step={1000}
-          value={expenses.monthlyExpenses}
-          onChange={e => handleChange(() => setExpenses({ monthlyExpenses: parseFloat(e.target.value) }))}
-          className="w-full accent-indigo-600" />
-        <div className="flex justify-between text-xs text-gray-400 mt-1">
-          <span>-20%</span>
-          <span>+20%</span>
-        </div>
-      </div>
+      <SensitivitySlider
+        label="Retirement Age"
+        value={profile.retirementAge}
+        min={profile.age + 1}
+        max={profile.age + 20}
+        step={1}
+        format={v => `${v}`}
+        onChange={v => handleChange(() => setProfile({ retirementAge: v }))}
+        color="indigo"
+      />
 
-      <div>
-        <div className="flex justify-between text-sm mb-1">
-          <span className="text-gray-600 dark:text-gray-400">Equity Return (%)</span>
-          <span className="font-semibold text-indigo-600 dark:text-indigo-400">
-            {((assumptions?.equityReturn || 0.10) * 100).toFixed(1)}%
-          </span>
-        </div>
-        <input type="range" min="5" max="18" step="0.5"
-          value={((assumptions?.equityReturn || 0.10) * 100)}
-          onChange={e => handleChange(() => setAssumptions({ equityReturn: parseFloat(e.target.value) / 100 }))}
-          className="w-full accent-indigo-600" />
-        <div className="flex justify-between text-xs text-gray-400 mt-1">
-          <span>5%</span>
-          <span>18%</span>
-        </div>
-      </div>
+      <SensitivitySlider
+        label="Monthly Savings"
+        value={income.monthlySavings || 0}
+        min={0}
+        max={Math.round((income.monthlySavings || 20000) * 2)}
+        step={1000}
+        format={v => `${sym}${v.toLocaleString()}`}
+        onChange={v => handleChange(() => setIncome({ monthlySavings: v }))}
+        color="emerald"
+      />
 
-      <div>
-        <div className="flex justify-between text-sm mb-1">
-          <span className="text-gray-600 dark:text-gray-400">Monthly Savings</span>
-          <span className="font-semibold text-indigo-600 dark:text-indigo-400">
-            {Math.round(income.monthlySavings || 0).toLocaleString()}
-          </span>
-        </div>
-        <input type="range"
-          min={0}
-          max={Math.round((income.monthlySavings || 20000) * 2)}
-          step={1000}
-          value={income.monthlySavings || 0}
-          onChange={e => handleChange(() => {
-            const { setIncome } = useStore.getState()
-            setIncome({ monthlySavings: parseFloat(e.target.value) })
-          })}
-          className="w-full accent-indigo-600" />
+      <SensitivitySlider
+        label="Equity Return"
+        value={(assumptions?.equityReturn || 0.10) * 100}
+        min={5}
+        max={18}
+        step={0.5}
+        format={v => `${v.toFixed(1)}%`}
+        onChange={v => handleChange(() => setAssumptions({ equityReturn: v / 100 }))}
+        color="purple"
+      />
+
+      <SensitivitySlider
+        label="Monthly Expenses"
+        value={expenses.monthlyExpenses}
+        min={Math.round(expenses.monthlyExpenses * 0.5)}
+        max={Math.round(expenses.monthlyExpenses * 2)}
+        step={1000}
+        format={v => `${sym}${v.toLocaleString()}`}
+        onChange={v => handleChange(() => setExpenses({ monthlyExpenses: v }))}
+        color="amber"
+      />
+    </div>
+  )
+}
+
+function SensitivitySlider({ label, value, min, max, step, format, onChange, color }) {
+  const colorMap = {
+    indigo: { text: 'text-indigo-400', bg: 'bg-indigo-500/10' },
+    emerald: { text: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+    purple: { text: 'text-purple-400', bg: 'bg-purple-500/10' },
+    amber: { text: 'text-amber-400', bg: 'bg-amber-500/10' },
+  }
+  const c = colorMap[color] || colorMap.indigo
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-2">
+        <span className="text-sm font-medium text-slate-300">{label}</span>
+        <span className={`text-sm font-bold tabular-nums px-2.5 py-0.5 rounded-lg ${c.bg} ${c.text}`}>
+          {format(value)}
+        </span>
+      </div>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={e => onChange(parseFloat(e.target.value))}
+        className="w-full"
+      />
+      <div className="flex justify-between text-xs text-slate-600 mt-1">
+        <span>{format(min)}</span>
+        <span>{format(max)}</span>
       </div>
     </div>
   )

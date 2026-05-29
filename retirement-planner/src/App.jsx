@@ -9,52 +9,47 @@ import Step5Results from './pages/Step5Results.jsx'
 const STEPS = [Step1Profile, Step2Income, Step3Expenses, Step4Scenarios, Step5Results]
 
 export default function App() {
-  const { currentStep, setStep, darkMode, toggleDarkMode } = useStore()
+  const { currentStep, setStep } = useStore()
 
   const StepComponent = STEPS[currentStep] || Step1Profile
 
   return (
-    <div className={darkMode ? 'dark' : ''}>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors">
-        {/* Header */}
-        <header className="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-gray-200 dark:border-gray-800">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-xl" aria-hidden="true">🏦</span>
-              <span className="font-bold text-gray-900 dark:text-white text-sm sm:text-base">RetireSmart</span>
-              <span className="hidden sm:inline text-xs text-gray-400 dark:text-gray-500 ml-1">Retirement Planner</span>
+    <div className="min-h-screen bg-slate-900" style={{ background: '#0f172a' }}>
+      {/* Header */}
+      <header className="sticky top-0 z-40 border-b border-slate-800" style={{ background: 'rgba(15,23,42,0.95)', backdropFilter: 'blur(12px)' }}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
             </div>
-            <button
-              onClick={toggleDarkMode}
-              aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-500 dark:text-gray-400">
-              {darkMode ? (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                  <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                </svg>
-              )}
-            </button>
+            <div>
+              <span className="font-bold text-white text-base tracking-tight">RetireSmart</span>
+              <span className="hidden sm:inline text-xs text-slate-500 ml-2">Retirement Planner</span>
+            </div>
           </div>
-        </header>
-
-        <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-          <ProgressBar currentStep={currentStep} />
-          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 sm:p-8">
-            <StepComponent
-              onNext={() => setStep(Math.min(STEPS.length - 1, currentStep + 1))}
-              onBack={() => setStep(Math.max(0, currentStep - 1))}
-            />
+          <div className="flex items-center gap-2">
+            <span className="hidden sm:inline text-xs font-medium px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+              Step {currentStep + 1} of {STEPS.length}
+            </span>
           </div>
-        </main>
+        </div>
+      </header>
 
-        <footer className="text-center py-6 text-xs text-gray-400 dark:text-gray-600">
-          RetireSmart is for educational purposes only. Not financial advice.
-        </footer>
-      </div>
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        <ProgressBar currentStep={currentStep} />
+        <div className="animate-fade-in">
+          <StepComponent
+            onNext={() => setStep(Math.min(STEPS.length - 1, currentStep + 1))}
+            onBack={() => setStep(Math.max(0, currentStep - 1))}
+          />
+        </div>
+      </main>
+
+      <footer className="text-center py-6 text-xs text-slate-600">
+        RetireSmart is for educational purposes only. Not financial advice.
+      </footer>
     </div>
   )
 }
