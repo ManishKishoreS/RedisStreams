@@ -44,7 +44,10 @@ export default function App() {
         <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
           <ProgressBar currentStep={currentStep} />
           <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 sm:p-8">
-            <StepComponent />
+            <StepComponent
+              onNext={() => setStep(Math.min(STEPS.length - 1, currentStep + 1))}
+              onBack={() => setStep(Math.max(0, currentStep - 1))}
+            />
           </div>
         </main>
 

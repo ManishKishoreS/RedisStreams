@@ -2,7 +2,7 @@ import { useStore } from '../store/useStore.js'
 import { CURRENCY_SYMBOLS } from '../data/defaults.js'
 
 export function Step4Scenarios({ onNext, onBack }) {
-  const { scenarios, addScenario, removeScenario, profile, income, expenses, assumptions } = useStore()
+  const { scenarios, addScenario, removeScenario, profile, income, expenses, assumptions, compute } = useStore()
   const sym = CURRENCY_SYMBOLS[profile.country] || '₹'
 
   const addPreset = (name, overrides) => {
@@ -73,7 +73,7 @@ export function Step4Scenarios({ onNext, onBack }) {
 
       <div className="flex gap-3 pt-2">
         <button onClick={onBack} className="btn-secondary">← Back</button>
-        <button onClick={onNext} className="btn-primary">View Results →</button>
+        <button onClick={() => { compute(); onNext() }} className="btn-primary">View Results →</button>
       </div>
     </div>
   )
