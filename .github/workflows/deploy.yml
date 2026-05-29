@@ -3,6 +3,7 @@ name: Deploy RetireSmart to GitHub Pages
 on:
   push:
     branches: [main, claude/serene-davinci-dCHzI]
+  workflow_dispatch:
 
 permissions:
   contents: read
