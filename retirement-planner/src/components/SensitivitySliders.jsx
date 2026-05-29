@@ -2,8 +2,9 @@ import { useStore } from '../store/useStore.js'
 import { CURRENCY_SYMBOLS } from '../data/defaults.js'
 
 export default function SensitivitySliders() {
-  const { profile, income, expenses, setProfile, setExpenses, setAssumptions, setIncome, assumptions, compute } = useStore()
-  const sym = CURRENCY_SYMBOLS[profile.country] || '₹'
+  const { profile, income, expenses, goal, setGoal, setExpenses, setAssumptions, setIncome, assumptions, compute } = useStore()
+  const sym = CURRENCY_SYMBOLS[profile.retireCountry || profile.workCountry || 'IN'] || '₹'
+  const mode = goal?.retirementMode || 'find'
 
   const handleChange = (updater) => {
     updater()
@@ -17,22 +18,39 @@ export default function SensitivitySliders() {
         <p className="text-xs text-slate-500 mt-1">Adjust sliders to see real-time impact on your plan</p>
       </div>
 
-      <SensitivitySlider
-        label="Retirement Age"
-        value={profile.retirementAge}
-        min={profile.age + 1}
-        max={profile.age + 20}
-        step={1}
-        format={v => `${v}`}
-        onChange={v => handleChange(() => setProfile({ retirementAge: v }))}
-        color="indigo"
-      />
+      {/* Mode B: target age slider */}
+      {mode === 'target' && (
+        <SensitivitySlider
+          label="Target Retirement Age"
+          value={goal.targetRetirementAge || 60}
+          min={(profile.age || 30) + 5}
+          max={75}
+          step={1}
+          format={v => `Age ${v}`}
+          onChange={v => handleChange(() => setGoal({ targetRetirementAge: v }))}
+          color="indigo"
+        />
+      )}
+
+      {/* Mode A: confidence threshold */}
+      {mode === 'find' && (
+        <SensitivitySlider
+          label="Confidence Threshold"
+          value={Math.round((goal.confidenceThreshold || 0.85) * 100)}
+          min={60}
+          max={99}
+          step={5}
+          format={v => `${v}%`}
+          onChange={v => handleChange(() => setGoal({ confidenceThreshold: v / 100 }))}
+          color="indigo"
+        />
+      )}
 
       <SensitivitySlider
         label="Monthly Savings"
         value={income.monthlySavings || 0}
         min={0}
-        max={Math.round((income.monthlySavings || 20000) * 2)}
+        max={Math.round(Math.max(income.monthlySavings || 20000, 20000) * 3)}
         step={1000}
         format={v => `${sym}${v.toLocaleString()}`}
         onChange={v => handleChange(() => setIncome({ monthlySavings: v }))}
@@ -52,9 +70,9 @@ export default function SensitivitySliders() {
 
       <SensitivitySlider
         label="Monthly Expenses"
-        value={expenses.monthlyExpenses}
-        min={Math.round(expenses.monthlyExpenses * 0.5)}
-        max={Math.round(expenses.monthlyExpenses * 2)}
+        value={expenses.monthlyExpenses || 0}
+        min={Math.round(Math.max(expenses.monthlyExpenses || 20000, 10000) * 0.4)}
+        max={Math.round(Math.max(expenses.monthlyExpenses || 20000, 20000) * 2)}
         step={1000}
         format={v => `${sym}${v.toLocaleString()}`}
         onChange={v => handleChange(() => setExpenses({ monthlyExpenses: v }))}

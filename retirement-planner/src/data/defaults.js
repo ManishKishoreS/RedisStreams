@@ -1,4 +1,11 @@
-export const LIFE_EXPECTANCY = { IN: 80, US: 85, UK: 83 }
+export const LIFE_EXPECTANCY = { IN: 80, US: 82, UK: 82 }
+
+// Gender-specific life expectancy: [male, female]
+export const LIFE_EXPECTANCY_GENDER = {
+  IN: { male: 78, female: 81, other: 80 },
+  US: { male: 76, female: 81, other: 79 },
+  UK: { male: 79, female: 83, other: 81 },
+}
 
 export const DEFAULT_RETURNS = {
   equity: 0.10,
@@ -47,5 +54,21 @@ export const TAX_BRACKETS = {
 }
 
 export const CURRENCY_SYMBOLS = { IN: '₹', US: '$', UK: '£' }
+export const CURRENCY_NAMES = { IN: 'INR', US: 'USD', UK: 'GBP' }
 
 export const COUNTRY_NAMES = { IN: 'India', US: 'United States', UK: 'United Kingdom' }
+
+// Smart defaults for life events by country
+export const EDUCATION_COST_DEFAULTS = { IN: 2500000, US: 150000, UK: 80000 }
+export const WEDDING_COST_DEFAULTS = { IN: 2000000, US: 30000, UK: 25000 }
+export const PARENT_CARE_MONTHLY = { IN: 15000, US: 3000, UK: 2500 }
+
+// Exchange rates (approximate, user can override)
+export const DEFAULT_EXCHANGE_RATES = {
+  'IN-US': 83,   // 1 USD = 83 INR
+  'US-IN': 83,
+  'IN-UK': 105,  // 1 GBP = 105 INR
+  'UK-IN': 105,
+  'US-UK': 0.79, // 1 GBP = 1/0.79 USD
+  'UK-US': 1.27,
+}

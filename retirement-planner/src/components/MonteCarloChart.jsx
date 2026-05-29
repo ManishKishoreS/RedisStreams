@@ -30,7 +30,7 @@ const CustomTooltip = ({ active, payload, label, sym }) => {
 export function MonteCarloChart() {
   const { results, profile } = useStore()
   if (!results?.monteCarlo) return null
-  const sym = CURRENCY_SYMBOLS[profile.country] || '₹'
+  const sym = CURRENCY_SYMBOLS[profile.retireCountry || profile.workCountry || profile.country] || '₹'
   const { percentiles, totalYears } = results.monteCarlo
 
   const data = Array.from({ length: totalYears }, (_, i) => ({

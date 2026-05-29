@@ -15,7 +15,7 @@ function fmt(v, sym) {
 
 export default function ScenarioComparison() {
   const { scenarios, profile, income, expenses, assumptions, results } = useStore()
-  const sym = CURRENCY_SYMBOLS[profile.country] || '₹'
+  const sym = CURRENCY_SYMBOLS[profile.retireCountry || profile.workCountry || profile.country] || '₹'
 
   if (!scenarios || scenarios.length === 0) return null
 
@@ -25,6 +25,11 @@ export default function ScenarioComparison() {
       const inc = { ...income, ...sc.income }
       const exp = { ...expenses, ...sc.expenses }
       const ass = { ...(assumptions || {}), ...sc.assumptions }
+
+      // Ensure retirementAge is set (use results or default)
+      if (!p.retirementAge) {
+        p.retirementAge = results?.retirementAge || 60
+      }
 
       const proj = projectRetirement(p, inc, exp, ass)
       const yearsAccum = Math.max(0, p.retirementAge - p.age)
