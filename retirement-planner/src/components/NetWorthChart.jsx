@@ -32,7 +32,8 @@ const CustomTooltip = ({ active, payload, label, sym }) => {
 export function NetWorthChart() {
   const { results, profile } = useStore()
   if (!results) return null
-  const sym = CURRENCY_SYMBOLS[profile.country] || '₹'
+  const sym = CURRENCY_SYMBOLS[profile.retireCountry || profile.workCountry || profile.country] || '₹'
+  const retirementAge = results.retirementAge || profile.retirementAge || 60
 
   const accData = (results.accumulation || []).map(row => ({
     age: row.age,
@@ -40,7 +41,7 @@ export function NetWorthChart() {
   }))
 
   const decData = (results.decumulation || []).map(row => ({
-    age: profile.retirementAge + row.year,
+    age: retirementAge + row.year,
     corpus: Math.round(row.corpus),
   }))
 
@@ -77,7 +78,7 @@ export function NetWorthChart() {
           />
           <Tooltip content={<CustomTooltip sym={sym} />} />
           <ReferenceLine
-            x={profile.retirementAge}
+            x={retirementAge}
             stroke="#f59e0b"
             strokeDasharray="4 3"
             strokeWidth={1.5}

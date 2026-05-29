@@ -1,12 +1,13 @@
 import { useStore } from './store/useStore.js'
 import { ProgressBar } from './components/ProgressBar.jsx'
 import { Step1Profile } from './pages/Step1Profile.jsx'
-import { Step2Income } from './pages/Step2Income.jsx'
-import { Step3Expenses } from './pages/Step3Expenses.jsx'
-import { Step4Scenarios } from './pages/Step4Scenarios.jsx'
-import Step5Results from './pages/Step5Results.jsx'
+import { Step2Family } from './pages/Step2Family.jsx'
+import { Step3Income } from './pages/Step3Income.jsx'
+import { Step4Expenses } from './pages/Step4Expenses.jsx'
+import { Step5Goal } from './pages/Step5Goal.jsx'
+import Step6Results from './pages/Step6Results.jsx'
 
-const STEPS = [Step1Profile, Step2Income, Step3Expenses, Step4Scenarios, Step5Results]
+const STEPS = [Step1Profile, Step2Family, Step3Income, Step4Expenses, Step5Goal, Step6Results]
 
 export default function App() {
   const { currentStep, setStep } = useStore()

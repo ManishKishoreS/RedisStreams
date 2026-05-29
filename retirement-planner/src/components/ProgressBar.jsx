@@ -1,8 +1,9 @@
 const STEPS = [
   { label: 'Profile', icon: '👤' },
+  { label: 'Family', icon: '👨‍👩‍👧' },
   { label: 'Income', icon: '💰' },
   { label: 'Expenses', icon: '📊' },
-  { label: 'Scenarios', icon: '🔮' },
+  { label: 'Goal', icon: '🎯' },
   { label: 'Results', icon: '🏆' },
 ]
 
@@ -13,7 +14,6 @@ export function ProgressBar({ currentStep }) {
         {STEPS.map((step, i) => {
           const done = i < currentStep
           const active = i === currentStep
-          const upcoming = i > currentStep
           return (
             <div key={step.label} className="flex items-center flex-1 last:flex-none">
               {/* Step node */}
