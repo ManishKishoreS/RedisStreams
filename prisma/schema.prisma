@@ -1,0 +1,74 @@
+// RetireWise Global — Prisma schema (PostgreSQL).
+//
+// Persists users and their retirement plans. The plan's deeply-nested,
+// frequently-evolving financial inputs are stored as a typed JSON document
+// (mirroring the `RetirementPlan` domain type) while the headline analysis
+// outputs are denormalised onto AnalysisSnapshot rows for fast dashboard reads
+// and history/comparison.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  // External auth subject (Clerk user id / Auth.js account id).
+  authId    String   @unique
+  email     String   @unique
+  firstName String?
+  lastName  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  plans Plan[]
+}
+
+model Plan {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String   @default("My retirement plan")
+
+  // Cross-border context, surfaced as columns for filtering/reporting.
+  workingCountry    String
+  retirementCountry String
+
+  // The full RetirementPlan domain object as JSON.
+  data Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  snapshots AnalysisSnapshot[]
+
+  @@index([userId])
+}
+
+model AnalysisSnapshot {
+  id     String @id @default(cuid())
+  planId String
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  // Denormalised headline outputs from AnalysisResult.
+  readinessScore     Int
+  status             String // green | amber | red
+  retirementAge      Int
+  requiredCorpus     Float
+  projectedCorpus    Float
+  shortfall          Float
+  safeWithdrawalRate Float
+  successProbability  Float
+  yearsMoneyWillLast Int
+
+  // Full AnalysisResult payload for charts / drill-down.
+  result Json
+
+  createdAt DateTime @default(now())
+
+  @@index([planId])
+}
