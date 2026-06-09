@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RetireWise — UI/UX Prototype v1</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Inter','system-ui','sans-serif'] },
+      colors: {
+        brand: {50:'#eff8ff',100:'#daefff',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',900:'#0c4a6e'},
+        ink: {900:'#0f172a',700:'#334155',500:'#64748b',300:'#cbd5e1',100:'#f1f5f9'},
+      },
+      boxShadow: { card: '0 1px 3px rgba(15,23,42,.06), 0 8px 24px rgba(15,23,42,.05)' }
+    }
+  }
+}
+</script>
+<style>
+  body { font-family:'Inter',system-ui,sans-serif; }
+  .screen { display:none; }
+  .screen.active { display:block; }
+  .navbtn.active { background:#0c4a6e; color:#fff; }
+</style>
+</head>
+<body class="bg-slate-100 text-slate-900">
+
+<!-- ============ PROTOTYPE CHROME (not part of the app design) ============ -->
+<div class="fixed top-0 left-0 right-0 z-50 bg-slate-900 text-white text-sm">
+  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-2 overflow-x-auto">
+    <span class="font-bold text-sky-400 mr-2 whitespace-nowrap">RetireWise Prototype v1</span>
+    <button onclick="show('design')" class="navbtn px-3 py-1 rounded-md whitespace-nowrap hover:bg-slate-700">0 · Design system</button>
+    <button onclick="show('landing')" class="navbtn px-3 py-1 rounded-md whitespace-nowrap hover:bg-slate-700">1 · Landing</button>
+    <button onclick="show('journey')" class="navbtn px-3 py-1 rounded-md whitespace-nowrap hover:bg-slate-700">2 · Journey choice</button>
+    <button onclick="show('wizard')" class="navbtn px-3 py-1 rounded-md whitespace-nowrap hover:bg-slate-700">3 · Onboarding wizard</button>
+    <button onclick="show('dashboard')" class="navbtn px-3 py-1 rounded-md whitespace-nowrap hover:bg-slate-700">4 · Dashboard</button>
+    <button onclick="show('scenarios')" class="navbtn px-3 py-1 rounded-md whitespace-nowrap hover:bg-slate-700">5 · Stress tests</button>
+    <button onclick="show('projections')" class="navbtn px-3 py-1 rounded-md whitespace-nowrap hover:bg-slate-700">6 · Year-by-year</button>
+  </div>
+</div>
+<div class="h-12"></div>
+
+<!-- ============ 0 · DESIGN SYSTEM ============ -->
+<section id="design" class="screen">
+  <div class="max-w-5xl mx-auto px-6 py-10 space-y-10">
+    <div>
+      <h1 class="text-3xl font-extrabold">RetireWise Design System</h1>
+      <p class="text-slate-500 mt-1">Calm, trustworthy fintech. Generous whitespace, soft cards, one accent colour, status colours reserved for meaning.</p>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-bold mb-3">Colour</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="rounded-xl overflow-hidden shadow-card bg-white"><div class="h-16 bg-sky-600"></div><div class="p-3 text-sm"><b>Brand / Sky 600</b><br><span class="text-slate-500">#0284C7 — actions, links, focus</span></div></div>
+        <div class="rounded-xl overflow-hidden shadow-card bg-white"><div class="h-16 bg-slate-900"></div><div class="p-3 text-sm"><b>Ink / Slate 900</b><br><span class="text-slate-500">#0F172A — headings, nav</span></div></div>
+        <div class="rounded-xl overflow-hidden shadow-card bg-white"><div class="h-16 bg-emerald-500"></div><div class="p-3 text-sm"><b>On track</b><br><span class="text-slate-500">#10B981 — green status only</span></div></div>
+        <div class="rounded-xl overflow-hidden shadow-card bg-white"><div class="h-16 bg-amber-500"></div><div class="p-3 text-sm"><b>Borderline</b><br><span class="text-slate-500">#F59E0B — amber status only</span></div></div>
+        <div class="rounded-xl overflow-hidden shadow-card bg-white"><div class="h-16 bg-rose-500"></div><div class="p-3 text-sm"><b>At risk</b><br><span class="text-slate-500">#F43F5E — red status only</span></div></div>
+        <div class="rounded-xl overflow-hidden shadow-card bg-white"><div class="h-16 bg-slate-100 border-b"></div><div class="p-3 text-sm"><b>Surface</b><br><span class="text-slate-500">#F1F5F9 — app background</span></div></div>
+        <div class="rounded-xl overflow-hidden shadow-card bg-white"><div class="h-16 bg-white border-b"></div><div class="p-3 text-sm"><b>Card</b><br><span class="text-slate-500">#FFFFFF — content cards</span></div></div>
+        <div class="rounded-xl overflow-hidden shadow-card bg-white"><div class="h-16 bg-indigo-500"></div><div class="p-3 text-sm"><b>Chart accent 2</b><br><span class="text-slate-500">#6366F1 — secondary series</span></div></div>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-bold mb-3">Typography — Inter</h2>
+      <div class="bg-white rounded-xl shadow-card p-6 space-y-3">
+        <div class="text-4xl font-extrabold">Display 36 / Extrabold — page heroes</div>
+        <div class="text-2xl font-bold">Heading 24 / Bold — section titles</div>
+        <div class="text-lg font-semibold">Subheading 18 / Semibold — card titles</div>
+        <div class="text-base">Body 16 / Regular — paragraph copy and form labels</div>
+        <div class="text-sm text-slate-500">Caption 14 / Slate 500 — helper text, chart axes</div>
+        <div class="text-3xl font-bold tabular-nums">£1,284,500 <span class="text-sm font-medium text-slate-500">numerals are tabular for alignment</span></div>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-bold mb-3">Core components</h2>
+      <div class="bg-white rounded-xl shadow-card p-6 flex flex-wrap items-center gap-4">
+        <button class="bg-sky-600 hover:bg-sky-700 text-white font-semibold px-5 py-2.5 rounded-lg">Primary action</button>
+        <button class="border border-slate-300 hover:bg-slate-50 font-semibold px-5 py-2.5 rounded-lg">Secondary</button>
+        <button class="text-sky-700 font-semibold px-2 py-2">Tertiary link →</button>
+        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-sm font-semibold px-3 py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>On track</span>
+        <span class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-700 text-sm font-semibold px-3 py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-amber-500"></span>Borderline</span>
+        <span class="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 text-sm font-semibold px-3 py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-rose-500"></span>At risk</span>
+        <div class="w-full max-w-xs">
+          <label class="text-sm font-medium">Annual salary</label>
+          <div class="mt-1 flex rounded-lg border border-slate-300 overflow-hidden focus-within:ring-2 focus-within:ring-sky-500">
+            <span class="px-3 py-2.5 bg-slate-50 text-slate-500 border-r">£</span>
+            <input class="px-3 py-2.5 w-full outline-none" value="85,000" />
+          </div>
+          <p class="text-xs text-slate-400 mt-1">Before tax, excluding bonus</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1 · LANDING ============ -->
+<section id="landing" class="screen">
+  <header class="bg-white border-b">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2 font-extrabold text-xl"><span class="w-8 h-8 rounded-lg bg-sky-600 text-white grid place-items-center">R</span> RetireWise</div>
+      <nav class="hidden md:flex gap-8 text-sm font-medium text-slate-600">
+        <a href="#">How it works</a><a href="#">Countries</a><a href="#">Pricing</a>
+      </nav>
+      <div class="flex gap-3">
+        <button class="font-semibold text-sm px-4 py-2">Sign in</button>
+        <button class="bg-sky-600 text-white font-semibold text-sm px-4 py-2 rounded-lg">Get started free</button>
+      </div>
+    </div>
+  </header>
+  <div class="bg-gradient-to-b from-white to-slate-100">
+    <div class="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <span class="inline-block bg-sky-50 text-sky-700 text-xs font-bold tracking-wide uppercase px-3 py-1 rounded-full mb-4">Cross-border retirement planning</span>
+        <h1 class="text-5xl font-extrabold leading-tight">Know exactly <span class="text-sky-600">when</span> you can retire.</h1>
+        <p class="mt-5 text-lg text-slate-600">Tax-aware projections, Monte Carlo simulation, and market crash stress-tests — even if you work in one country and retire in another.</p>
+        <div class="mt-8 flex gap-4">
+          <button onclick="show('journey')" class="bg-sky-600 hover:bg-sky-700 text-white font-semibold px-6 py-3.5 rounded-lg text-lg">Check my retirement →</button>
+          <button class="border border-slate-300 font-semibold px-6 py-3.5 rounded-lg text-lg bg-white">See a demo plan</button>
+        </div>
+        <p class="mt-4 text-sm text-slate-400">Free to try · No card required · Not financial advice</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-card p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div><div class="text-sm text-slate-500">Retirement readiness</div><div class="text-3xl font-extrabold">82<span class="text-lg text-slate-400">/100</span></div></div>
+          <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-sm font-semibold px-3 py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>On track for 60</span>
+        </div>
+        <svg viewBox="0 0 400 140" class="w-full"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0ea5e9" stop-opacity=".5"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity=".03"/></linearGradient></defs>
+          <path d="M0,120 C60,110 90,80 140,62 C200,40 240,30 290,38 C330,44 370,80 400,110 L400,140 L0,140 Z" fill="url(#g1)"/>
+          <path d="M0,120 C60,110 90,80 140,62 C200,40 240,30 290,38 C330,44 370,80 400,110" fill="none" stroke="#0284c7" stroke-width="2.5"/>
+        </svg>
+        <div class="grid grid-cols-3 gap-3 mt-4 text-center">
+          <div class="bg-slate-50 rounded-lg p-3"><div class="text-xs text-slate-500">Success odds</div><div class="font-bold text-lg">91%</div></div>
+          <div class="bg-slate-50 rounded-lg p-3"><div class="text-xs text-slate-500">Earliest age</div><div class="font-bold text-lg">57</div></div>
+          <div class="bg-slate-50 rounded-lg p-3"><div class="text-xs text-slate-500">Money lasts</div><div class="font-bold text-lg">35 yrs</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 pb-20 grid md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-xl shadow-card p-6"><div class="text-2xl mb-2">🌍</div><h3 class="font-bold">Work here, retire there</h3><p class="text-sm text-slate-500 mt-1">UK→Portugal, India→Dubai, US→Thailand. We model both tax systems and the treaty between them.</p></div>
+      <div class="bg-white rounded-xl shadow-card p-6"><div class="text-2xl mb-2">🎲</div><h3 class="font-bold">10,000 market futures</h3><p class="text-sm text-slate-500 mt-1">Monte Carlo simulation plus crash stress-tests show the odds, not just one rosy line.</p></div>
+      <div class="bg-white rounded-xl shadow-card p-6"><div class="text-2xl mb-2">🧾</div><h3 class="font-bold">Taxes, actually included</h3><p class="text-sm text-slate-500 mt-1">Income tax, capital gains, pension withdrawals and inflation — year by year until age 95.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2 · JOURNEY CHOICE ============ -->
+<section id="journey" class="screen">
+  <div class="min-h-screen bg-slate-100 flex items-center justify-center px-6 py-16">
+    <div class="max-w-3xl w-full text-center">
+      <div class="text-sm font-semibold text-sky-600 mb-2">LET'S GET STARTED</div>
+      <h1 class="text-3xl font-extrabold">Which question are you trying to answer?</h1>
+      <p class="text-slate-500 mt-2 mb-10">This just sets your starting point — you can switch anytime.</p>
+      <div class="grid md:grid-cols-2 gap-6 text-left">
+        <button onclick="show('wizard')" class="bg-white rounded-2xl shadow-card p-8 border-2 border-transparent hover:border-sky-500 transition text-left group">
+          <div class="w-12 h-12 rounded-xl bg-sky-50 grid place-items-center text-2xl mb-4">🎯</div>
+          <h3 class="text-xl font-bold group-hover:text-sky-700">“Can I retire at age…?”</h3>
+          <p class="text-slate-500 mt-2 text-sm">You have a target age in mind. We'll tell you if it works, the odds of success, and what to change if it doesn't.</p>
+          <div class="mt-4 text-sky-600 font-semibold text-sm">I know my retirement age →</div>
+        </button>
+        <button onclick="show('wizard')" class="bg-white rounded-2xl shadow-card p-8 border-2 border-transparent hover:border-sky-500 transition text-left group">
+          <div class="w-12 h-12 rounded-xl bg-indigo-50 grid place-items-center text-2xl mb-4">🔍</div>
+          <h3 class="text-xl font-bold group-hover:text-sky-700">“When can I retire?”</h3>
+          <p class="text-slate-500 mt-2 text-sm">Not sure when it's possible. We'll find your earliest, recommended and conservative retirement ages from your finances.</p>
+          <div class="mt-4 text-sky-600 font-semibold text-sm">Find my retirement age →</div>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 · ONBOARDING WIZARD ============ -->
+<section id="wizard" class="screen">
+  <div class="min-h-screen bg-slate-100">
+    <div class="max-w-6xl mx-auto px-6 py-8 grid md:grid-cols-[240px_1fr] gap-8">
+      <!-- step rail -->
+      <aside class="hidden md:block">
+        <div class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Your plan</div>
+        <ol class="space-y-1 text-sm">
+          <li class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500"><span class="w-6 h-6 rounded-full bg-emerald-500 text-white grid place-items-center text-xs">✓</span> About you</li>
+          <li class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500"><span class="w-6 h-6 rounded-full bg-emerald-500 text-white grid place-items-center text-xs">✓</span> Family</li>
+          <li class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white shadow-card font-semibold"><span class="w-6 h-6 rounded-full bg-sky-600 text-white grid place-items-center text-xs">3</span> Countries</li>
+          <li class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400"><span class="w-6 h-6 rounded-full bg-slate-200 grid place-items-center text-xs">4</span> Savings &amp; assets</li>
+          <li class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400"><span class="w-6 h-6 rounded-full bg-slate-200 grid place-items-center text-xs">5</span> Debts</li>
+          <li class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400"><span class="w-6 h-6 rounded-full bg-slate-200 grid place-items-center text-xs">6</span> Income</li>
+          <li class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400"><span class="w-6 h-6 rounded-full bg-slate-200 grid place-items-center text-xs">7</span> Spending</li>
+          <li class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400"><span class="w-6 h-6 rounded-full bg-slate-200 grid place-items-center text-xs">8</span> Investments</li>
+          <li class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400"><span class="w-6 h-6 rounded-full bg-slate-200 grid place-items-center text-xs">9</span> Review</li>
+        </ol>
+        <div class="mt-6 bg-sky-50 rounded-xl p-4 text-xs text-sky-900"><b>💡 Why we ask</b><br>Different countries tax your pension and investments very differently. This is the single biggest factor most calculators ignore.</div>
+      </aside>
+
+      <!-- step content -->
+      <main>
+        <div class="md:hidden mb-4"><div class="h-1.5 bg-slate-200 rounded-full"><div class="h-1.5 bg-sky-600 rounded-full" style="width:33%"></div></div><div class="text-xs text-slate-500 mt-1">Step 3 of 9</div></div>
+        <div class="bg-white rounded-2xl shadow-card p-8">
+          <h1 class="text-2xl font-extrabold">Where do you work — and where will you retire?</h1>
+          <p class="text-slate-500 mt-1 mb-8 text-sm">They don't have to be the same place. We'll handle the tax treaty between them.</p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="border border-slate-200 rounded-xl p-5">
+              <div class="text-xs font-bold uppercase tracking-wide text-slate-400 mb-3">Working country</div>
+              <div class="flex items-center gap-3 border border-slate-300 rounded-lg px-4 py-3 bg-white">
+                <span class="text-xl">🇬🇧</span><span class="font-semibold flex-1">United Kingdom</span><span class="text-slate-400">▾</span>
+              </div>
+              <div class="mt-3 text-xs text-slate-500 space-y-1">
+                <div class="flex justify-between"><span>Income tax</span><b>0–45% banded</b></div>
+                <div class="flex justify-between"><span>Capital gains</span><b>20%</b></div>
+                <div class="flex justify-between"><span>Pension treatment</span><b>25% tax-free lump</b></div>
+              </div>
+            </div>
+            <div class="border-2 border-sky-200 bg-sky-50/40 rounded-xl p-5">
+              <div class="text-xs font-bold uppercase tracking-wide text-sky-600 mb-3">Retirement country</div>
+              <div class="flex items-center gap-3 border border-slate-300 rounded-lg px-4 py-3 bg-white">
+                <span class="text-xl">🇵🇹</span><span class="font-semibold flex-1">Portugal</span><span class="text-slate-400">▾</span>
+              </div>
+              <div class="mt-3 text-xs text-slate-500 space-y-1">
+                <div class="flex justify-between"><span>Retirement income tax</span><b>10% (NHR-style)</b></div>
+                <div class="flex justify-between"><span>Capital gains</span><b>28%</b></div>
+                <div class="flex justify-between"><span>Wealth / inheritance</span><b>None</b></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 flex items-center justify-between bg-emerald-50 border border-emerald-100 rounded-xl px-5 py-4">
+            <div class="text-sm"><b class="text-emerald-700">✓ Double-taxation agreement exists</b><br><span class="text-slate-500 text-xs">UK–Portugal treaty: you won't be taxed twice on the same income. We apply the higher of the two rates.</span></div>
+            <label class="inline-flex items-center cursor-pointer"><input type="checkbox" checked class="sr-only peer"><div class="w-11 h-6 bg-slate-200 peer-checked:bg-emerald-500 rounded-full relative after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-5"></div></label>
+          </div>
+
+          <div class="mt-8 flex items-center justify-between">
+            <button onclick="show('journey')" class="font-semibold text-slate-500 px-4 py-2.5">← Back</button>
+            <div class="flex items-center gap-4">
+              <button class="text-sm text-slate-400 font-medium">Save &amp; finish later</button>
+              <button onclick="show('dashboard')" class="bg-sky-600 hover:bg-sky-700 text-white font-semibold px-8 py-3 rounded-lg">Continue →</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 · DASHBOARD ============ -->
+<section id="dashboard" class="screen">
+  <div class="bg-slate-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2 font-extrabold"><span class="w-8 h-8 rounded-lg bg-sky-500 grid place-items-center">R</span> RetireWise</div>
+      <div class="flex items-center gap-6 text-sm">
+        <a class="font-semibold text-white" href="#">Dashboard</a>
+        <a class="text-slate-400" href="#" onclick="show('scenarios')">Stress tests</a>
+        <a class="text-slate-400" href="#" onclick="show('projections')">Year-by-year</a>
+        <span class="w-8 h-8 rounded-full bg-sky-700 grid place-items-center font-bold text-xs">AT</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 py-8 space-y-6">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-extrabold">Alex's retirement plan</h1>
+        <p class="text-sm text-slate-500">🇬🇧 Working in the UK · 🇵🇹 Retiring in Portugal · Updated today</p>
+      </div>
+      <div class="flex gap-3"><button class="border border-slate-300 bg-white font-semibold text-sm px-4 py-2.5 rounded-lg">Edit inputs</button><button class="bg-sky-600 text-white font-semibold text-sm px-4 py-2.5 rounded-lg">Export PDF</button></div>
+    </div>
+
+    <!-- hero verdict -->
+    <div class="bg-white rounded-2xl shadow-card p-8 grid md:grid-cols-[auto_1fr_auto] items-center gap-8">
+      <div class="relative w-36 h-36">
+        <svg viewBox="0 0 120 120" class="w-36 h-36 -rotate-90">
+          <circle cx="60" cy="60" r="52" fill="none" stroke="#e2e8f0" stroke-width="12"/>
+          <circle cx="60" cy="60" r="52" fill="none" stroke="#10b981" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="58.8"/>
+        </svg>
+        <div class="absolute inset-0 grid place-items-center"><div class="text-center"><div class="text-4xl font-extrabold">82</div><div class="text-xs text-slate-400">of 100</div></div></div>
+      </div>
+      <div>
+        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-sm font-semibold px-3 py-1 rounded-full mb-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>On track</span>
+        <h2 class="text-2xl font-extrabold">Yes — you can retire at <span class="text-emerald-600">60</span>.</h2>
+        <p class="text-slate-500 mt-1 text-sm max-w-xl">Across 10,000 simulated market futures, your money lasted to age 95 in <b>91%</b> of them. Your projected corpus of <b>£1.38M</b> exceeds the <b>£1.25M</b> you need.</p>
+      </div>
+      <div class="text-sm space-y-2 min-w-[180px]">
+        <div class="flex justify-between gap-6"><span class="text-slate-500">Earliest possible</span><b>57</b></div>
+        <div class="flex justify-between gap-6"><span class="text-slate-500">Recommended</span><b>59</b></div>
+        <div class="flex justify-between gap-6"><span class="text-slate-500">Conservative</span><b>63</b></div>
+        <div class="flex justify-between gap-6 pt-2 border-t"><span class="text-slate-500">Safe withdrawal</span><b>3.7%</b></div>
+      </div>
+    </div>
+
+    <!-- KPI row -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white rounded-xl shadow-card p-5"><div class="text-xs font-semibold text-slate-400 uppercase">Required corpus</div><div class="text-2xl font-extrabold mt-1 tabular-nums">£1.25M</div><div class="text-xs text-slate-400 mt-1">at retirement, after tax</div></div>
+      <div class="bg-white rounded-xl shadow-card p-5"><div class="text-xs font-semibold text-slate-400 uppercase">Projected corpus</div><div class="text-2xl font-extrabold mt-1 tabular-nums">£1.38M</div><div class="text-xs text-emerald-600 font-semibold mt-1">▲ £130k surplus</div></div>
+      <div class="bg-white rounded-xl shadow-card p-5"><div class="text-xs font-semibold text-slate-400 uppercase">Success probability</div><div class="text-2xl font-extrabold mt-1">91%</div><div class="text-xs text-slate-400 mt-1">10,000 Monte Carlo runs</div></div>
+      <div class="bg-white rounded-xl shadow-card p-5"><div class="text-xs font-semibold text-slate-400 uppercase">Money lasts until</div><div class="text-2xl font-extrabold mt-1">95+</div><div class="text-xs text-slate-400 mt-1">full life expectancy</div></div>
+    </div>
+
+    <!-- chart + sliders -->
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 bg-white rounded-2xl shadow-card p-6">
+        <div class="flex items-center justify-between mb-4"><h3 class="font-bold">Your corpus over time</h3>
+          <div class="flex gap-4 text-xs"><span class="flex items-center gap-1.5"><span class="w-3 h-1 rounded bg-sky-500"></span>Growing</span><span class="flex items-center gap-1.5"><span class="w-3 h-1 rounded bg-indigo-400"></span>Drawing down</span></div></div>
+        <svg viewBox="0 0 600 220" class="w-full">
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0ea5e9" stop-opacity=".45"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity=".02"/></linearGradient>
+          <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#818cf8" stop-opacity=".45"/><stop offset="100%" stop-color="#818cf8" stop-opacity=".02"/></linearGradient></defs>
+          <line x1="0" y1="180" x2="600" y2="180" stroke="#e2e8f0"/>
+          <line x1="300" y1="10" x2="300" y2="180" stroke="#cbd5e1" stroke-dasharray="4 4"/>
+          <text x="300" y="200" text-anchor="middle" font-size="11" fill="#64748b">Retire at 60</text>
+          <text x="20" y="200" font-size="11" fill="#94a3b8">Age 40</text>
+          <text x="560" y="200" font-size="11" fill="#94a3b8">95</text>
+          <path d="M0,170 C80,160 150,130 220,95 C260,75 285,60 300,52 L300,180 L0,180 Z" fill="url(#g2)"/>
+          <path d="M0,170 C80,160 150,130 220,95 C260,75 285,60 300,52" fill="none" stroke="#0284c7" stroke-width="2.5"/>
+          <path d="M300,52 C360,48 420,70 480,105 C520,128 560,155 600,172 L600,180 L300,180 Z" fill="url(#g3)"/>
+          <path d="M300,52 C360,48 420,70 480,105 C520,128 560,155 600,172" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+          <circle cx="300" cy="52" r="5" fill="#0284c7"/><text x="312" y="48" font-size="12" font-weight="700" fill="#0f172a">£1.38M peak</text>
+        </svg>
+      </div>
+      <div class="bg-white rounded-2xl shadow-card p-6">
+        <h3 class="font-bold mb-1">What if…?</h3>
+        <p class="text-xs text-slate-400 mb-5">Drag — everything recalculates instantly.</p>
+        <div class="space-y-5 text-sm">
+          <div><div class="flex justify-between mb-1"><span class="font-medium">Retirement age</span><b class="text-sky-600">60</b></div><input type="range" min="50" max="70" value="60" class="w-full accent-sky-600"></div>
+          <div><div class="flex justify-between mb-1"><span class="font-medium">Inflation</span><b class="text-sky-600">3.0%</b></div><input type="range" min="1" max="8" value="3" class="w-full accent-sky-600"></div>
+          <div><div class="flex justify-between mb-1"><span class="font-medium">Market returns</span><b class="text-sky-600">6.0%</b></div><input type="range" min="2" max="12" value="6" class="w-full accent-sky-600"></div>
+          <div><div class="flex justify-between mb-1"><span class="font-medium">Life expectancy</span><b class="text-sky-600">90</b></div><input type="range" min="75" max="105" value="90" class="w-full accent-sky-600"></div>
+          <div><div class="flex justify-between mb-1"><span class="font-medium">Monthly spending</span><b class="text-sky-600">£4,000</b></div><input type="range" min="2000" max="8000" value="4000" class="w-full accent-sky-600"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- insights -->
+    <div class="bg-white rounded-2xl shadow-card p-6">
+      <h3 class="font-bold mb-4">What this means for you</h3>
+      <div class="grid md:grid-cols-3 gap-4 text-sm">
+        <div class="bg-emerald-50/60 border border-emerald-100 rounded-xl p-4"><b class="text-emerald-700">✓ You could stop 3 years earlier.</b><p class="text-slate-600 mt-1">Retiring at 57 still gives 84% success odds — if you accept a slightly tighter budget.</p></div>
+        <div class="bg-amber-50/60 border border-amber-100 rounded-xl p-4"><b class="text-amber-700">⚠ Inflation is your biggest risk.</b><p class="text-slate-600 mt-1">At 6% inflation your money runs out at 84. Consider inflation-linked income for essentials.</p></div>
+        <div class="bg-sky-50/60 border border-sky-100 rounded-xl p-4"><b class="text-sky-700">💡 Small change, big effect.</b><p class="text-slate-600 mt-1">Cutting withdrawals by just 0.5% extends your portfolio by ~8 years in bad markets.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 · STRESS TESTS ============ -->
+<section id="scenarios" class="screen">
+  <div class="bg-slate-900 text-white"><div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2 font-extrabold"><span class="w-8 h-8 rounded-lg bg-sky-500 grid place-items-center">R</span> RetireWise</div>
+    <div class="flex items-center gap-6 text-sm"><a class="text-slate-400" href="#" onclick="show('dashboard')">Dashboard</a><a class="font-semibold text-white" href="#">Stress tests</a><a class="text-slate-400" href="#" onclick="show('projections')">Year-by-year</a><span class="w-8 h-8 rounded-full bg-sky-700 grid place-items-center font-bold text-xs">AT</span></div>
+  </div></div>
+
+  <div class="max-w-7xl mx-auto px-6 py-8 space-y-6">
+    <div><h1 class="text-2xl font-extrabold">What if markets crash?</h1><p class="text-sm text-slate-500">Your plan, replayed through five hostile futures. Survived = money lasts to 95.</p></div>
+    <div class="grid md:grid-cols-5 gap-4">
+      <div class="bg-white rounded-xl shadow-card p-4 border-t-4 border-emerald-400"><div class="text-xs font-bold text-slate-400 uppercase">Normal market</div><div class="text-lg font-extrabold mt-1 text-emerald-600">Survives ✓</div><div class="text-xs text-slate-400 mt-1">£410k left at 95</div></div>
+      <div class="bg-white rounded-xl shadow-card p-4 border-t-4 border-emerald-400"><div class="text-xs font-bold text-slate-400 uppercase">-30% at day one</div><div class="text-lg font-extrabold mt-1 text-emerald-600">Survives ✓</div><div class="text-xs text-slate-400 mt-1">£95k left at 95</div></div>
+      <div class="bg-white rounded-xl shadow-card p-4 border-t-4 border-amber-400"><div class="text-xs font-bold text-slate-400 uppercase">Crash at year 10</div><div class="text-lg font-extrabold mt-1 text-amber-600">Tight ⚠</div><div class="text-xs text-slate-400 mt-1">£12k left at 95</div></div>
+      <div class="bg-white rounded-xl shadow-card p-4 border-t-4 border-emerald-400"><div class="text-xs font-bold text-slate-400 uppercase">Late crash (yr 22)</div><div class="text-lg font-extrabold mt-1 text-emerald-600">Survives ✓</div><div class="text-xs text-slate-400 mt-1">£180k left at 95</div></div>
+      <div class="bg-white rounded-xl shadow-card p-4 border-t-4 border-rose-400"><div class="text-xs font-bold text-slate-400 uppercase">Three crashes</div><div class="text-lg font-extrabold mt-1 text-rose-600">Fails ✗</div><div class="text-xs text-slate-400 mt-1">Runs out at age 88</div></div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 bg-white rounded-2xl shadow-card p-6">
+        <h3 class="font-bold mb-4">Corpus under each scenario</h3>
+        <svg viewBox="0 0 600 230" class="w-full">
+          <line x1="0" y1="200" x2="600" y2="200" stroke="#e2e8f0"/>
+          <text x="10" y="218" font-size="11" fill="#94a3b8">60</text><text x="570" y="218" font-size="11" fill="#94a3b8">95</text>
+          <path d="M0,60 C100,55 200,75 320,110 C420,140 520,175 600,190" fill="none" stroke="#10b981" stroke-width="2.5"/>
+          <path d="M0,60 L40,105 C140,100 260,125 380,155 C470,177 550,190 600,196" fill="none" stroke="#0ea5e9" stroke-width="2.5"/>
+          <path d="M0,60 C90,58 160,70 200,85 L230,130 C330,160 460,185 600,198" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+          <path d="M0,60 C100,55 200,75 320,110 C400,133 450,148 480,175 C520,186 560,192 600,193" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+          <path d="M0,60 L30,95 C90,95 150,115 200,140 L230,165 C280,180 330,193 380,200 L600,200" fill="none" stroke="#f43f5e" stroke-width="2.5"/>
+          <circle cx="380" cy="200" r="4" fill="#f43f5e"/><text x="335" y="195" font-size="11" font-weight="700" fill="#e11d48">depleted at 88</text>
+        </svg>
+        <div class="flex flex-wrap gap-4 mt-3 text-xs text-slate-500">
+          <span class="flex items-center gap-1.5"><span class="w-3 h-1 rounded bg-emerald-500"></span>Normal</span>
+          <span class="flex items-center gap-1.5"><span class="w-3 h-1 rounded bg-sky-500"></span>Immediate -30%</span>
+          <span class="flex items-center gap-1.5"><span class="w-3 h-1 rounded bg-amber-500"></span>Year-10 crash</span>
+          <span class="flex items-center gap-1.5"><span class="w-3 h-1 rounded bg-indigo-500"></span>Late crash</span>
+          <span class="flex items-center gap-1.5"><span class="w-3 h-1 rounded bg-rose-500"></span>Three crashes</span>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-card p-6">
+        <h3 class="font-bold mb-1">Build your own crash</h3>
+        <p class="text-xs text-slate-400 mb-4">Or type a custom return for every year.</p>
+        <div class="space-y-4 text-sm">
+          <div><label class="font-medium">Crash size</label><div class="flex gap-2 mt-1">
+            <button class="flex-1 border rounded-lg py-2 font-semibold text-slate-500">-20%</button>
+            <button class="flex-1 rounded-lg py-2 font-semibold bg-sky-600 text-white">-30%</button>
+            <button class="flex-1 border rounded-lg py-2 font-semibold text-slate-500">-40%</button></div></div>
+          <div><div class="flex justify-between mb-1"><label class="font-medium">Crash year</label><b class="text-sky-600">Year 10 (age 70)</b></div><input type="range" min="0" max="35" value="10" class="w-full accent-sky-600"></div>
+          <div><label class="font-medium">Recovery</label><div class="flex gap-2 mt-1">
+            <button class="flex-1 rounded-lg py-2 font-semibold bg-sky-600 text-white text-xs">V-shape</button>
+            <button class="flex-1 border rounded-lg py-2 font-semibold text-slate-500 text-xs">Slow</button>
+            <button class="flex-1 border rounded-lg py-2 font-semibold text-slate-500 text-xs">None</button></div></div>
+          <button class="w-full bg-slate-900 text-white font-semibold py-3 rounded-lg mt-2">Run scenario</button>
+          <button class="w-full text-sky-700 font-semibold text-xs">✏️ Enter custom returns year-by-year</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-card p-6">
+      <h3 class="font-bold mb-4">Monte Carlo — where you end up at 95 <span class="text-slate-400 font-normal text-sm">(10,000 futures)</span></h3>
+      <div class="flex items-end gap-1 h-36">
+        <div class="bg-rose-300 rounded-t w-full" style="height:9%"></div><div class="bg-rose-200 rounded-t w-full" style="height:14%"></div>
+        <div class="bg-slate-200 rounded-t w-full" style="height:26%"></div><div class="bg-slate-300 rounded-t w-full" style="height:48%"></div>
+        <div class="bg-sky-300 rounded-t w-full" style="height:72%"></div><div class="bg-sky-400 rounded-t w-full" style="height:100%"></div>
+        <div class="bg-sky-500 rounded-t w-full" style="height:88%"></div><div class="bg-sky-400 rounded-t w-full" style="height:64%"></div>
+        <div class="bg-sky-300 rounded-t w-full" style="height:42%"></div><div class="bg-sky-200 rounded-t w-full" style="height:27%"></div>
+        <div class="bg-sky-200 rounded-t w-full" style="height:16%"></div><div class="bg-sky-100 rounded-t w-full" style="height:8%"></div>
+      </div>
+      <div class="flex justify-between text-xs text-slate-400 mt-2"><span>Ran out (9%)</span><span>Median £420k</span><span>Best £2.1M</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6 · YEAR-BY-YEAR ============ -->
+<section id="projections" class="screen">
+  <div class="bg-slate-900 text-white"><div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2 font-extrabold"><span class="w-8 h-8 rounded-lg bg-sky-500 grid place-items-center">R</span> RetireWise</div>
+    <div class="flex items-center gap-6 text-sm"><a class="text-slate-400" href="#" onclick="show('dashboard')">Dashboard</a><a class="text-slate-400" href="#" onclick="show('scenarios')">Stress tests</a><a class="font-semibold text-white" href="#">Year-by-year</a><span class="w-8 h-8 rounded-full bg-sky-700 grid place-items-center font-bold text-xs">AT</span></div>
+  </div></div>
+
+  <div class="max-w-7xl mx-auto px-6 py-8 space-y-6">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div><h1 class="text-2xl font-extrabold">Every year, in detail</h1><p class="text-sm text-slate-500">All figures after tax, in future (nominal) money.</p></div>
+      <div class="flex gap-2 text-sm">
+        <button class="bg-white border border-slate-300 px-4 py-2 rounded-lg font-semibold">Nominal £</button>
+        <button class="bg-slate-900 text-white px-4 py-2 rounded-lg font-semibold">Today's £</button>
+        <button class="bg-white border border-slate-300 px-4 py-2 rounded-lg font-semibold">⬇ CSV</button>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl shadow-card overflow-hidden">
+      <table class="w-full text-sm tabular-nums">
+        <thead class="bg-slate-50 text-xs uppercase text-slate-400 text-left">
+          <tr><th class="px-5 py-3">Age</th><th class="px-5 py-3">Phase</th><th class="px-5 py-3 text-right">Start corpus</th><th class="px-5 py-3 text-right">Growth</th><th class="px-5 py-3 text-right">Saved / drawn</th><th class="px-5 py-3 text-right">Tax</th><th class="px-5 py-3 text-right">Spending</th><th class="px-5 py-3 text-right">End corpus</th></tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <tr><td class="px-5 py-3 font-bold">58</td><td class="px-5 py-3"><span class="bg-sky-50 text-sky-700 px-2 py-0.5 rounded-full text-xs font-semibold">Saving</span></td><td class="px-5 py-3 text-right">£1,180,400</td><td class="px-5 py-3 text-right text-emerald-600">+£70,800</td><td class="px-5 py-3 text-right text-emerald-600">+£28,300</td><td class="px-5 py-3 text-right text-slate-400">£19,200</td><td class="px-5 py-3 text-right text-slate-400">—</td><td class="px-5 py-3 text-right font-bold">£1,279,500</td></tr>
+          <tr><td class="px-5 py-3 font-bold">59</td><td class="px-5 py-3"><span class="bg-sky-50 text-sky-700 px-2 py-0.5 rounded-full text-xs font-semibold">Saving</span></td><td class="px-5 py-3 text-right">£1,279,500</td><td class="px-5 py-3 text-right text-emerald-600">+£76,700</td><td class="px-5 py-3 text-right text-emerald-600">+£29,100</td><td class="px-5 py-3 text-right text-slate-400">£19,900</td><td class="px-5 py-3 text-right text-slate-400">—</td><td class="px-5 py-3 text-right font-bold">£1,385,300</td></tr>
+          <tr class="bg-amber-50/50"><td class="px-5 py-3 font-bold">60 🎉</td><td class="px-5 py-3"><span class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full text-xs font-semibold">Retired</span></td><td class="px-5 py-3 text-right">£1,385,300</td><td class="px-5 py-3 text-right text-emerald-600">+£80,100</td><td class="px-5 py-3 text-right text-rose-500">−£84,600</td><td class="px-5 py-3 text-right text-slate-400">£6,900</td><td class="px-5 py-3 text-right">£77,700</td><td class="px-5 py-3 text-right font-bold">£1,380,800</td></tr>
+          <tr><td class="px-5 py-3 font-bold">61</td><td class="px-5 py-3"><span class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full text-xs font-semibold">Retired</span></td><td class="px-5 py-3 text-right">£1,380,800</td><td class="px-5 py-3 text-right text-emerald-600">+£79,800</td><td class="px-5 py-3 text-right text-rose-500">−£56,200</td><td class="px-5 py-3 text-right text-slate-400">£4,600</td><td class="px-5 py-3 text-right">£51,600</td><td class="px-5 py-3 text-right font-bold">£1,404,400</td></tr>
+          <tr><td class="px-5 py-3 font-bold">67</td><td class="px-5 py-3"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full text-xs font-semibold">+ State pension</span></td><td class="px-5 py-3 text-right">£1,392,100</td><td class="px-5 py-3 text-right text-emerald-600">+£80,400</td><td class="px-5 py-3 text-right text-rose-500">−£49,800</td><td class="px-5 py-3 text-right text-slate-400">£4,100</td><td class="px-5 py-3 text-right">£61,500</td><td class="px-5 py-3 text-right font-bold">£1,422,700</td></tr>
+          <tr><td class="px-5 py-3 font-bold">80</td><td class="px-5 py-3"><span class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full text-xs font-semibold">Retired</span></td><td class="px-5 py-3 text-right">£1,089,300</td><td class="px-5 py-3 text-right text-emerald-600">+£62,100</td><td class="px-5 py-3 text-right text-rose-500">−£89,400</td><td class="px-5 py-3 text-right text-slate-400">£7,300</td><td class="px-5 py-3 text-right">£82,100</td><td class="px-5 py-3 text-right font-bold">£1,062,000</td></tr>
+          <tr><td class="px-5 py-3 font-bold text-slate-400" colspan="8">⋯ 35 rows total — virtualised scroll in the real app ⋯</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<script>
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('active'));
+  const idx={design:0,landing:1,journey:2,wizard:3,dashboard:4,scenarios:5,projections:6}[id];
+  document.querySelectorAll('.navbtn')[idx].classList.add('active');
+  window.scrollTo(0,0);
+}
+show('landing');
+</script>
+</body>
+</html>
