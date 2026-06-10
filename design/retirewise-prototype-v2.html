@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RetireWise — Prototype v2 (Dark Fintech)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = { darkMode:'class', theme:{ extend:{
+  fontFamily:{ sans:['Inter','system-ui','sans-serif'], display:['Space Grotesk','Inter','sans-serif'] },
+  colors:{
+    canvas:'#070b16', panel:'#0e1525', panel2:'#131c30', line:'#1e293b',
+    cyan:{400:'#22d3ee',500:'#06b6d4'}, violet:{400:'#a78bfa',500:'#8b5cf6'},
+    mint:{400:'#34d399',500:'#10b981'}, amber:{400:'#fbbf24'}, rose:{400:'#fb7185',500:'#f43f5e'}
+  },
+  boxShadow:{ glow:'0 0 0 1px rgba(34,211,238,.15), 0 8px 40px rgba(6,182,212,.12)', card:'0 1px 0 rgba(255,255,255,.04) inset, 0 12px 40px rgba(0,0,0,.4)' },
+  backgroundImage:{ 'grad-cv':'radial-gradient(1200px 600px at 80% -10%, rgba(139,92,246,.18), transparent), radial-gradient(900px 500px at 0% 0%, rgba(6,182,212,.15), transparent)' }
+}}}
+</script>
+<style>
+  body{font-family:Inter,system-ui,sans-serif;background:#070b16;color:#e2e8f0}
+  .screen{display:none} .screen.active{display:block}
+  .navbtn.active{background:linear-gradient(90deg,#06b6d4,#8b5cf6);color:#fff}
+  .glass{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.07)}
+  .num{font-family:'Space Grotesk',Inter,sans-serif;font-variant-numeric:tabular-nums}
+  ::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:#1e293b;border-radius:8px}
+  input[type=range]{-webkit-appearance:none;height:6px;border-radius:6px;background:#1e293b}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;height:18px;width:18px;border-radius:50%;background:linear-gradient(90deg,#22d3ee,#a78bfa);cursor:pointer;box-shadow:0 0 12px rgba(34,211,238,.6)}
+</style>
+</head>
+<body class="bg-canvas">
+
+<!-- prototype chrome -->
+<div class="fixed top-0 inset-x-0 z-50 bg-black/60 backdrop-blur border-b border-line">
+  <div class="max-w-[1400px] mx-auto px-4 py-2 flex items-center gap-1.5 overflow-x-auto text-xs">
+    <span class="font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-400 mr-2 whitespace-nowrap">RetireWise v2</span>
+    <button onclick="show(0)" class="navbtn px-3 py-1.5 rounded-lg whitespace-nowrap hover:bg-white/5">Design</button>
+    <button onclick="show(1)" class="navbtn px-3 py-1.5 rounded-lg whitespace-nowrap hover:bg-white/5">Landing</button>
+    <button onclick="show(2)" class="navbtn px-3 py-1.5 rounded-lg whitespace-nowrap hover:bg-white/5">Journey</button>
+    <button onclick="show(3)" class="navbtn px-3 py-1.5 rounded-lg whitespace-nowrap hover:bg-white/5">Wizard</button>
+    <button onclick="show(4)" class="navbtn px-3 py-1.5 rounded-lg whitespace-nowrap hover:bg-white/5">Dashboard</button>
+    <button onclick="show(5)" class="navbtn px-3 py-1.5 rounded-lg whitespace-nowrap hover:bg-white/5">Charts ×9</button>
+    <button onclick="show(6)" class="navbtn px-3 py-1.5 rounded-lg whitespace-nowrap hover:bg-white/5">Stress</button>
+    <button onclick="show(7)" class="navbtn px-3 py-1.5 rounded-lg whitespace-nowrap hover:bg-white/5">Year-by-year</button>
+    <button onclick="show(8)" class="navbtn px-3 py-1.5 rounded-lg whitespace-nowrap hover:bg-white/5">📱 Mobile</button>
+  </div>
+</div>
+<div class="h-11"></div>
+
+<!-- ========= 0 · DESIGN SYSTEM ========= -->
+<section class="screen">
+  <div class="bg-grad-cv min-h-screen">
+  <div class="max-w-6xl mx-auto px-6 py-12 space-y-12">
+    <div><h1 class="font-display text-4xl font-bold">Design System — Dark Fintech</h1>
+    <p class="text-slate-400 mt-2 max-w-2xl">Deep space canvas, glassmorphic panels, twin-gradient accent (cyan→violet). Big Space-Grotesk numerals. Status colours carry meaning only. Built mobile-first, scales to wide dashboards.</p></div>
+
+    <div><h2 class="font-display text-xl font-semibold mb-4">Palette</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="glass rounded-2xl p-4"><div class="h-14 rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500"></div><p class="mt-2 text-sm font-semibold">Accent gradient</p><p class="text-xs text-slate-500">cyan #22D3EE → violet #8B5CF6</p></div>
+      <div class="glass rounded-2xl p-4"><div class="h-14 rounded-xl bg-canvas border border-line"></div><p class="mt-2 text-sm font-semibold">Canvas #070B16</p><p class="text-xs text-slate-500">app background</p></div>
+      <div class="glass rounded-2xl p-4"><div class="h-14 rounded-xl bg-panel border border-line"></div><p class="mt-2 text-sm font-semibold">Panel #0E1525</p><p class="text-xs text-slate-500">cards</p></div>
+      <div class="glass rounded-2xl p-4"><div class="h-14 rounded-xl bg-mint-500"></div><p class="mt-2 text-sm font-semibold">On track</p><p class="text-xs text-slate-500">#10B981</p></div>
+      <div class="glass rounded-2xl p-4"><div class="h-14 rounded-xl bg-amber-400"></div><p class="mt-2 text-sm font-semibold">Borderline</p><p class="text-xs text-slate-500">#FBBF24</p></div>
+      <div class="glass rounded-2xl p-4"><div class="h-14 rounded-xl bg-rose-500"></div><p class="mt-2 text-sm font-semibold">At risk</p><p class="text-xs text-slate-500">#F43F5E</p></div>
+      <div class="glass rounded-2xl p-4"><div class="h-14 rounded-xl bg-violet-400"></div><p class="mt-2 text-sm font-semibold">Chart B</p><p class="text-xs text-slate-500">#A78BFA</p></div>
+      <div class="glass rounded-2xl p-4"><div class="h-14 rounded-xl bg-cyan-400"></div><p class="mt-2 text-sm font-semibold">Chart A</p><p class="text-xs text-slate-500">#22D3EE</p></div>
+    </div></div>
+
+    <div><h2 class="font-display text-xl font-semibold mb-4">Type & numerals</h2>
+    <div class="glass rounded-2xl p-6 space-y-3">
+      <div class="font-display text-5xl font-bold">Space Grotesk 48</div>
+      <div class="text-2xl font-bold">Inter Bold 24 — section titles</div>
+      <div class="text-base text-slate-300">Inter Regular 16 — body copy and labels</div>
+      <div class="text-sm text-slate-500">Inter 14 / slate-500 — helper & axes</div>
+      <div class="num text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-400">£1,384,500</div>
+    </div></div>
+
+    <div><h2 class="font-display text-xl font-semibold mb-4">Components</h2>
+    <div class="glass rounded-2xl p-6 flex flex-wrap items-center gap-4">
+      <button class="bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold px-5 py-2.5 rounded-xl shadow-glow">Primary</button>
+      <button class="border border-line bg-panel font-semibold px-5 py-2.5 rounded-xl">Secondary</button>
+      <span class="inline-flex items-center gap-1.5 bg-mint-500/15 text-mint-400 text-sm font-semibold px-3 py-1 rounded-full ring-1 ring-mint-500/30"><span class="w-1.5 h-1.5 rounded-full bg-mint-400"></span>On track</span>
+      <span class="inline-flex items-center gap-1.5 bg-amber-400/15 text-amber-400 text-sm font-semibold px-3 py-1 rounded-full ring-1 ring-amber-400/30">Borderline</span>
+      <span class="inline-flex items-center gap-1.5 bg-rose-500/15 text-rose-400 text-sm font-semibold px-3 py-1 rounded-full ring-1 ring-rose-500/30">At risk</span>
+      <div class="w-full max-w-xs"><label class="text-sm text-slate-400">Annual salary</label>
+        <div class="mt-1 flex rounded-xl border border-line bg-panel overflow-hidden focus-within:ring-2 focus-within:ring-cyan-500/50">
+          <span class="px-3 py-2.5 bg-white/5 text-slate-400 border-r border-line">£</span>
+          <input class="px-3 py-2.5 w-full bg-transparent outline-none num" value="85,000"/></div></div>
+    </div></div>
+  </div></div>
+</section>
+
+<!-- ========= 1 · LANDING ========= -->
+<section class="screen">
+  <div class="bg-grad-cv">
+  <header class="border-b border-line">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2 font-display font-bold text-lg"><span class="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 grid place-items-center text-canvas">R</span>RetireWise</div>
+      <nav class="hidden md:flex gap-8 text-sm text-slate-400"><a href="#">How it works</a><a href="#">Countries</a><a href="#">Pricing</a></nav>
+      <div class="flex gap-3 text-sm"><button class="px-4 py-2 text-slate-300">Sign in</button><button class="bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold px-4 py-2 rounded-xl">Start free</button></div>
+    </div>
+  </header>
+  <div class="max-w-6xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <span class="inline-block text-xs font-bold tracking-widest uppercase text-cyan-400 mb-4">Cross-border retirement intelligence</span>
+      <h1 class="font-display text-5xl md:text-6xl font-bold leading-[1.05]">Retire with <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-400">certainty</span>, not hope.</h1>
+      <p class="mt-6 text-lg text-slate-400">Tax-aware projections across countries, 10,000-path Monte Carlo, and crash stress-tests — so you know the odds before you hand in your notice.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <button onclick="show(2)" class="bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold px-6 py-3.5 rounded-xl text-lg shadow-glow">Check my retirement →</button>
+        <button onclick="show(4)" class="border border-line bg-panel font-semibold px-6 py-3.5 rounded-xl text-lg">View demo plan</button>
+      </div>
+      <div class="mt-6 flex gap-6 text-xs text-slate-500"><span>✓ 9 countries</span><span>✓ No card required</span><span>✓ Not financial advice</span></div>
+    </div>
+    <div class="glass rounded-3xl p-6 shadow-card">
+      <div class="flex items-center justify-between mb-5">
+        <div><div class="text-xs text-slate-400 uppercase tracking-wide">Readiness</div><div class="num text-4xl font-bold">82<span class="text-lg text-slate-500">/100</span></div></div>
+        <span class="inline-flex items-center gap-1.5 bg-mint-500/15 text-mint-400 text-sm font-semibold px-3 py-1 rounded-full ring-1 ring-mint-500/30"><span class="w-1.5 h-1.5 rounded-full bg-mint-400"></span>On track · age 60</span>
+      </div>
+      <svg viewBox="0 0 400 150" class="w-full"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22d3ee" stop-opacity=".5"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/></linearGradient></defs>
+        <path d="M0,130 C70,120 110,80 160,58 C220,32 270,28 320,40 C360,50 385,90 400,120 L400,150 L0,150Z" fill="url(#lg)"/>
+        <path d="M0,130 C70,120 110,80 160,58 C220,32 270,28 320,40 C360,50 385,90 400,120" fill="none" stroke="#22d3ee" stroke-width="2.5"/>
+      </svg>
+      <div class="grid grid-cols-3 gap-3 mt-4">
+        <div class="bg-white/5 rounded-xl p-3 text-center"><div class="text-xs text-slate-500">Success</div><div class="num font-bold text-lg text-mint-400">91%</div></div>
+        <div class="bg-white/5 rounded-xl p-3 text-center"><div class="text-xs text-slate-500">Earliest</div><div class="num font-bold text-lg">57</div></div>
+        <div class="bg-white/5 rounded-xl p-3 text-center"><div class="text-xs text-slate-500">Lasts</div><div class="num font-bold text-lg">35y</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto px-6 pb-20 grid md:grid-cols-4 gap-4">
+    <div class="glass rounded-2xl p-5"><div class="text-2xl mb-2">🌍</div><h3 class="font-semibold">Work here, retire there</h3><p class="text-sm text-slate-400 mt-1">Both tax systems + the treaty between them.</p></div>
+    <div class="glass rounded-2xl p-5"><div class="text-2xl mb-2">🎲</div><h3 class="font-semibold">10,000 futures</h3><p class="text-sm text-slate-400 mt-1">Monte Carlo odds, not one lucky line.</p></div>
+    <div class="glass rounded-2xl p-5"><div class="text-2xl mb-2">🧾</div><h3 class="font-semibold">Taxes included</h3><p class="text-sm text-slate-400 mt-1">Income, CGT, pensions, inflation — yearly.</p></div>
+    <div class="glass rounded-2xl p-5"><div class="text-2xl mb-2">💥</div><h3 class="font-semibold">Crash-tested</h3><p class="text-sm text-slate-400 mt-1">Sequence-of-returns risk made visible.</p></div>
+  </div>
+  </div>
+</section>
+
+<!-- ========= 2 · JOURNEY ========= -->
+<section class="screen">
+  <div class="bg-grad-cv min-h-screen grid place-items-center px-6 py-16">
+    <div class="max-w-3xl w-full text-center">
+      <div class="text-xs font-bold tracking-widest uppercase text-cyan-400 mb-3">Let's begin</div>
+      <h1 class="font-display text-4xl font-bold">What do you want to find out?</h1>
+      <p class="text-slate-400 mt-3 mb-10">Pick a starting point — you can switch anytime.</p>
+      <div class="grid md:grid-cols-2 gap-5 text-left">
+        <button onclick="show(3)" class="glass rounded-3xl p-8 hover:shadow-glow hover:-translate-y-0.5 transition group">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-500/15 ring-1 ring-cyan-500/30 grid place-items-center text-2xl mb-4">🎯</div>
+          <h3 class="font-display text-xl font-bold">"Can I retire at age…?"</h3>
+          <p class="text-slate-400 mt-2 text-sm">You have a target age. We confirm if it works, the odds, and what to tweak if not.</p>
+          <div class="mt-4 text-cyan-400 font-semibold text-sm">I know my age →</div>
+        </button>
+        <button onclick="show(3)" class="glass rounded-3xl p-8 hover:shadow-glow hover:-translate-y-0.5 transition group">
+          <div class="w-12 h-12 rounded-2xl bg-violet-500/15 ring-1 ring-violet-500/30 grid place-items-center text-2xl mb-4">🔍</div>
+          <h3 class="font-display text-xl font-bold">"When can I retire?"</h3>
+          <p class="text-slate-400 mt-2 text-sm">Unsure when it's possible. We find your earliest, recommended & conservative ages.</p>
+          <div class="mt-4 text-violet-400 font-semibold text-sm">Find my age →</div>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========= 3 · WIZARD ========= -->
+<section class="screen">
+  <div class="bg-grad-cv min-h-screen">
+  <div class="max-w-[1200px] mx-auto px-6 py-8 grid lg:grid-cols-[230px_1fr] gap-8">
+    <aside class="hidden lg:block">
+      <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Build your plan</div>
+      <ol class="space-y-1 text-sm">
+        <li class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500"><span class="w-6 h-6 rounded-full bg-mint-500 text-canvas grid place-items-center text-xs">✓</span>You</li>
+        <li class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500"><span class="w-6 h-6 rounded-full bg-mint-500 text-canvas grid place-items-center text-xs">✓</span>Family</li>
+        <li class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500"><span class="w-6 h-6 rounded-full bg-mint-500 text-canvas grid place-items-center text-xs">✓</span>Countries</li>
+        <li class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500"><span class="w-6 h-6 rounded-full bg-mint-500 text-canvas grid place-items-center text-xs">✓</span>Life expectancy</li>
+        <li class="flex items-center gap-3 px-3 py-2 rounded-xl glass font-semibold"><span class="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 text-white grid place-items-center text-xs">5</span>Assets</li>
+        <li class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600"><span class="w-6 h-6 rounded-full bg-white/5 grid place-items-center text-xs">6</span>Debts</li>
+        <li class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600"><span class="w-6 h-6 rounded-full bg-white/5 grid place-items-center text-xs">7</span>Income</li>
+        <li class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600"><span class="w-6 h-6 rounded-full bg-white/5 grid place-items-center text-xs">8</span>Spending & inflation</li>
+        <li class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600"><span class="w-6 h-6 rounded-full bg-white/5 grid place-items-center text-xs">9</span>Life events</li>
+        <li class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600"><span class="w-6 h-6 rounded-full bg-white/5 grid place-items-center text-xs">10</span>Investments</li>
+        <li class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600"><span class="w-6 h-6 rounded-full bg-white/5 grid place-items-center text-xs">11</span>Goals & review</li>
+      </ol>
+    </aside>
+    <main class="space-y-5">
+      <div class="lg:hidden"><div class="h-1.5 bg-white/10 rounded-full"><div class="h-1.5 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500" style="width:45%"></div></div><div class="text-xs text-slate-500 mt-1">Step 5 of 11 · Assets</div></div>
+
+      <div class="glass rounded-3xl p-6 md:p-8">
+        <h1 class="font-display text-2xl font-bold">What have you got saved &amp; invested?</h1>
+        <p class="text-slate-400 mt-1 text-sm">Add anything you have — we'll separate what can actually fund retirement from what can't (your home, for instance).</p>
+
+        <!-- asset groups -->
+        <div class="mt-6 space-y-4">
+          <div class="bg-panel rounded-2xl border border-line p-5">
+            <div class="flex items-center gap-2 mb-4"><span class="text-lg">💵</span><h3 class="font-semibold">Cash &amp; deposits</h3></div>
+            <div class="grid sm:grid-cols-3 gap-3">
+              <div><label class="text-xs text-slate-400">Current account</label><div class="ipt">£ <input value="12,000"></div></div>
+              <div><label class="text-xs text-slate-400">Savings</label><div class="ipt">£ <input value="25,000"></div></div>
+              <div><label class="text-xs text-slate-400">Fixed deposits</label><div class="ipt">£ <input value="15,000"></div></div>
+            </div>
+          </div>
+          <div class="bg-panel rounded-2xl border border-line p-5">
+            <div class="flex items-center gap-2 mb-4"><span class="text-lg">📈</span><h3 class="font-semibold">Investments &amp; pensions</h3></div>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div><label class="text-xs text-slate-400">Stocks / ETFs / funds (taxable)</label><div class="ipt">£ <input value="90,000"></div></div>
+              <div><label class="text-xs text-slate-400">ISA / SIPP / 401k / IRA / NPS</label><div class="ipt">£ <input value="160,000"></div></div>
+              <div><label class="text-xs text-slate-400">Workplace / private pension</label><div class="ipt">£ <input value="120,000"></div></div>
+              <div><label class="text-xs text-slate-400">Business equity</label><div class="ipt">£ <input value="0"></div></div>
+            </div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-panel rounded-2xl border border-line p-5">
+              <div class="flex items-center gap-2 mb-4"><span class="text-lg">🏠</span><h3 class="font-semibold">Property</h3></div>
+              <div class="space-y-3">
+                <div><label class="text-xs text-slate-400">Primary home <span class="text-slate-600">(excluded from corpus)</span></label><div class="ipt">£ <input value="450,000"></div></div>
+                <div><label class="text-xs text-slate-400">Investment property</label><div class="ipt">£ <input value="0"></div></div>
+              </div>
+            </div>
+            <div class="bg-panel rounded-2xl border border-line p-5">
+              <div class="flex items-center gap-2 mb-4"><span class="text-lg">🪙</span><h3 class="font-semibold">Alternatives</h3></div>
+              <div class="space-y-3">
+                <div><label class="text-xs text-slate-400">Gold / crypto / collectibles</label><div class="ipt">£ <input value="20,000"></div></div>
+                <div class="text-xs text-slate-500 pt-2">Tip: volatile assets are stress-tested harder in scenarios.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 flex items-center justify-between glass rounded-2xl px-5 py-4">
+          <span class="text-sm text-slate-400">Investable corpus today</span>
+          <span class="num text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-400">£442,000</span>
+        </div>
+
+        <div class="mt-8 flex items-center justify-between">
+          <button onclick="show(2)" class="font-semibold text-slate-400 px-4 py-2.5">← Back</button>
+          <div class="flex items-center gap-3"><button class="text-sm text-slate-500">Save &amp; exit</button>
+          <button onclick="show(4)" class="bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold px-8 py-3 rounded-xl shadow-glow">Continue →</button></div>
+        </div>
+      </div>
+    </main>
+  </div></div>
+</section>
+
+<!-- ========= 4 · DASHBOARD ========= -->
+<section class="screen">
+  <div class="border-b border-line bg-black/30"><div class="max-w-[1400px] mx-auto px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-2 font-display font-bold"><span class="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 grid place-items-center text-canvas">R</span>RetireWise</div>
+    <div class="flex items-center gap-6 text-sm"><a class="font-semibold" href="#">Dashboard</a><a class="text-slate-500" href="#" onclick="show(5)">Charts</a><a class="text-slate-500" href="#" onclick="show(6)">Stress</a><a class="text-slate-500" href="#" onclick="show(7)">Yearly</a><span class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 grid place-items-center text-xs font-bold text-white">AT</span></div>
+  </div></div>
+  <div class="bg-grad-cv">
+  <div class="max-w-[1400px] mx-auto px-6 py-8 space-y-6">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div><h1 class="font-display text-2xl font-bold">Alex's plan</h1><p class="text-sm text-slate-400">🇬🇧 UK → 🇵🇹 Portugal · DTA applied · updated today</p></div>
+      <div class="flex gap-2 text-sm"><button class="border border-line bg-panel px-4 py-2.5 rounded-xl font-semibold">Edit</button><button class="bg-gradient-to-r from-cyan-500 to-violet-500 text-white px-4 py-2.5 rounded-xl font-semibold">Export PDF</button></div>
+    </div>
+
+    <!-- verdict -->
+    <div class="glass rounded-3xl p-6 md:p-8 grid md:grid-cols-[auto_1fr_auto] items-center gap-8 shadow-card">
+      <div class="relative w-36 h-36 mx-auto">
+        <svg viewBox="0 0 120 120" class="w-36 h-36 -rotate-90"><defs><linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs>
+          <circle cx="60" cy="60" r="52" fill="none" stroke="#1e293b" stroke-width="11"/>
+          <circle cx="60" cy="60" r="52" fill="none" stroke="url(#ring)" stroke-width="11" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="58.8"/></svg>
+        <div class="absolute inset-0 grid place-items-center text-center"><div><div class="num text-4xl font-bold">82</div><div class="text-xs text-slate-500">of 100</div></div></div>
+      </div>
+      <div>
+        <span class="inline-flex items-center gap-1.5 bg-mint-500/15 text-mint-400 text-sm font-semibold px-3 py-1 rounded-full ring-1 ring-mint-500/30 mb-3"><span class="w-1.5 h-1.5 rounded-full bg-mint-400"></span>On track</span>
+        <h2 class="font-display text-3xl font-bold">Yes — retire at <span class="text-mint-400">60</span>.</h2>
+        <p class="text-slate-400 mt-2 text-sm max-w-xl">Across 10,000 market futures your money lasted to 95 in <b class="text-slate-200">91%</b>. Projected corpus <b class="text-slate-200">£1.38M</b> beats the <b class="text-slate-200">£1.25M</b> required.</p>
+      </div>
+      <div class="text-sm space-y-2.5 md:min-w-[190px] glass rounded-2xl p-4">
+        <div class="flex justify-between gap-6"><span class="text-slate-400">Earliest</span><b class="num">57</b></div>
+        <div class="flex justify-between gap-6"><span class="text-slate-400">Recommended</span><b class="num">59</b></div>
+        <div class="flex justify-between gap-6"><span class="text-slate-400">Conservative</span><b class="num">63</b></div>
+        <div class="flex justify-between gap-6"><span class="text-slate-400">Optimistic</span><b class="num">55</b></div>
+        <div class="flex justify-between gap-6 pt-2 border-t border-line"><span class="text-slate-400">Safe withdrawal</span><b class="num text-cyan-400">3.7%</b></div>
+      </div>
+    </div>
+
+    <!-- KPI grid: all spec outputs -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="glass rounded-2xl p-5"><div class="text-xs uppercase text-slate-500">Required corpus</div><div class="num text-2xl font-bold mt-1">£1.25M</div><div class="text-xs text-slate-500 mt-1">after-tax, at 60</div></div>
+      <div class="glass rounded-2xl p-5"><div class="text-xs uppercase text-slate-500">Projected corpus</div><div class="num text-2xl font-bold mt-1">£1.38M</div><div class="text-xs text-mint-400 mt-1">▲ £130k surplus</div></div>
+      <div class="glass rounded-2xl p-5"><div class="text-xs uppercase text-slate-500">Success probability</div><div class="num text-2xl font-bold mt-1 text-mint-400">91%</div><div class="text-xs text-slate-500 mt-1">10,000 MC runs</div></div>
+      <div class="glass rounded-2xl p-5"><div class="text-xs uppercase text-slate-500">Money lasts</div><div class="num text-2xl font-bold mt-1">95+</div><div class="text-xs text-slate-500 mt-1">never depletes</div></div>
+      <div class="glass rounded-2xl p-5"><div class="text-xs uppercase text-slate-500">Tax impact (lifetime)</div><div class="num text-2xl font-bold mt-1">£214k</div><div class="text-xs text-slate-500 mt-1">11% effective in retirement</div></div>
+      <div class="glass rounded-2xl p-5"><div class="text-xs uppercase text-slate-500">Inflation impact</div><div class="num text-2xl font-bold mt-1">×2.4</div><div class="text-xs text-slate-500 mt-1">£48k → £96k spend</div></div>
+      <div class="glass rounded-2xl p-5"><div class="text-xs uppercase text-slate-500">Real return</div><div class="num text-2xl font-bold mt-1">2.9%</div><div class="text-xs text-slate-500 mt-1">after inflation</div></div>
+      <div class="glass rounded-2xl p-5"><div class="text-xs uppercase text-slate-500">Emergency fund</div><div class="num text-2xl font-bold mt-1 text-mint-400">7 mo</div><div class="text-xs text-slate-500 mt-1">target 6 ✓</div></div>
+    </div>
+
+    <!-- corpus chart + what-if -->
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 glass rounded-3xl p-6">
+        <div class="flex items-center justify-between mb-4"><h3 class="font-semibold">Corpus over time</h3>
+          <div class="flex gap-4 text-xs text-slate-400"><span class="flex items-center gap-1.5"><span class="w-3 h-1 rounded bg-cyan-400"></span>Accumulate</span><span class="flex items-center gap-1.5"><span class="w-3 h-1 rounded bg-violet-400"></span>Drawdown</span></div></div>
+        <svg viewBox="0 0 600 220" class="w-full"><defs>
+          <linearGradient id="ca" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22d3ee" stop-opacity=".4"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+          <linearGradient id="cb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa" stop-opacity=".4"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></linearGradient></defs>
+          <line x1="0" y1="180" x2="600" y2="180" stroke="#1e293b"/>
+          <line x1="300" y1="10" x2="300" y2="180" stroke="#334155" stroke-dasharray="4 4"/>
+          <text x="300" y="200" text-anchor="middle" font-size="11" fill="#64748b">Retire · 60</text>
+          <text x="20" y="200" font-size="11" fill="#475569">40</text><text x="575" y="200" font-size="11" fill="#475569">95</text>
+          <path d="M0,170 C80,160 150,128 220,92 C262,72 286,58 300,50 L300,180 L0,180Z" fill="url(#ca)"/>
+          <path d="M0,170 C80,160 150,128 220,92 C262,72 286,58 300,50" fill="none" stroke="#22d3ee" stroke-width="2.5"/>
+          <path d="M300,50 C360,46 420,68 480,104 C520,128 560,154 600,172 L600,180 L300,180Z" fill="url(#cb)"/>
+          <path d="M300,50 C360,46 420,68 480,104 C520,128 560,154 600,172" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
+          <circle cx="300" cy="50" r="5" fill="#22d3ee"/><text x="312" y="46" font-size="12" font-weight="700" fill="#e2e8f0">£1.38M</text>
+        </svg>
+      </div>
+      <div class="glass rounded-3xl p-6">
+        <h3 class="font-semibold">What if…?</h3><p class="text-xs text-slate-500 mb-5">Drag — instant recalculation.</p>
+        <div class="space-y-5 text-sm">
+          <div><div class="flex justify-between mb-1.5"><span class="text-slate-300">Retirement age</span><b class="num text-cyan-400">60</b></div><input type="range" min="50" max="70" value="60" class="w-full"></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-slate-300">Inflation</span><b class="num text-cyan-400">3.0%</b></div><input type="range" min="1" max="8" value="3" class="w-full"></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-slate-300">Market return</span><b class="num text-cyan-400">6.0%</b></div><input type="range" min="2" max="12" value="6" class="w-full"></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-slate-300">Life expectancy</span><b class="num text-cyan-400">90</b></div><input type="range" min="75" max="105" value="90" class="w-full"></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-slate-300">Withdrawal rate</span><b class="num text-cyan-400">3.7%</b></div><input type="range" min="20" max="60" value="37" class="w-full"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI insights -->
+    <div class="glass rounded-3xl p-6">
+      <h3 class="font-semibold mb-4 flex items-center gap-2">✨ AI insights</h3>
+      <div class="grid md:grid-cols-3 gap-4 text-sm">
+        <div class="bg-mint-500/10 ring-1 ring-mint-500/20 rounded-2xl p-4"><b class="text-mint-400">You could stop at 57.</b><p class="text-slate-300 mt-1">Still 84% success — with a slightly tighter budget.</p></div>
+        <div class="bg-amber-400/10 ring-1 ring-amber-400/20 rounded-2xl p-4"><b class="text-amber-400">Inflation is your top risk.</b><p class="text-slate-300 mt-1">At 6% your corpus runs out at 84. Inflation-link essentials.</p></div>
+        <div class="bg-cyan-500/10 ring-1 ring-cyan-500/20 rounded-2xl p-4"><b class="text-cyan-400">Small lever, big gain.</b><p class="text-slate-300 mt-1">−0.5% withdrawals ≈ +8 years of portfolio life.</p></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ========= 5 · CHARTS ×9 ========= -->
+<section class="screen">
+  <div class="border-b border-line bg-black/30"><div class="max-w-[1400px] mx-auto px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-2 font-display font-bold"><span class="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 grid place-items-center text-canvas">R</span>RetireWise</div>
+    <div class="flex items-center gap-6 text-sm"><a class="text-slate-500" href="#" onclick="show(4)">Dashboard</a><a class="font-semibold" href="#">Charts</a><a class="text-slate-500" href="#" onclick="show(6)">Stress</a><a class="text-slate-500" href="#" onclick="show(7)">Yearly</a></div>
+  </div></div>
+  <div class="bg-grad-cv"><div class="max-w-[1400px] mx-auto px-6 py-8">
+    <h1 class="font-display text-2xl font-bold mb-1">Visualisation suite</h1><p class="text-sm text-slate-400 mb-6">All nine required charts, interactive in the real app.</p>
+    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+      <!-- 1 corpus growth -->
+      <div class="glass rounded-2xl p-5"><h3 class="text-sm font-semibold mb-3">1 · Corpus growth</h3>
+        <svg viewBox="0 0 300 120" class="w-full"><path d="M0,110 C60,100 120,60 180,42 C230,28 270,24 300,30" fill="none" stroke="#22d3ee" stroke-width="2"/><line x1="0" y1="110" x2="300" y2="110" stroke="#1e293b"/></svg></div>
+      <!-- 2 depletion -->
+      <div class="glass rounded-2xl p-5"><h3 class="text-sm font-semibold mb-3">2 · Corpus depletion</h3>
+        <svg viewBox="0 0 300 120" class="w-full"><path d="M0,30 C70,28 130,55 200,85 C240,100 280,108 300,110" fill="none" stroke="#a78bfa" stroke-width="2"/><line x1="0" y1="110" x2="300" y2="110" stroke="#1e293b"/></svg></div>
+      <!-- 3 inflation expenses -->
+      <div class="glass rounded-2xl p-5"><h3 class="text-sm font-semibold mb-3">3 · Inflation-adjusted expenses</h3>
+        <svg viewBox="0 0 300 120" class="w-full"><path d="M0,95 C80,88 160,70 300,30" fill="none" stroke="#fbbf24" stroke-width="2"/><line x1="0" y1="110" x2="300" y2="110" stroke="#1e293b"/></svg></div>
+      <!-- 4 withdrawals -->
+      <div class="glass rounded-2xl p-5"><h3 class="text-sm font-semibold mb-3">4 · Withdrawals vs income</h3>
+        <div class="flex items-end gap-1 h-[100px]"><div class="flex-1 bg-cyan-400/70 rounded-t" style="height:60%"></div><div class="flex-1 bg-cyan-400/70 rounded-t" style="height:55%"></div><div class="flex-1 bg-cyan-400/70 rounded-t" style="height:70%"></div><div class="flex-1 bg-mint-500/70 rounded-t" style="height:35%"></div><div class="flex-1 bg-mint-500/70 rounded-t" style="height:40%"></div><div class="flex-1 bg-cyan-400/70 rounded-t" style="height:80%"></div></div></div>
+      <!-- 5 allocation -->
+      <div class="glass rounded-2xl p-5"><h3 class="text-sm font-semibold mb-3">5 · Asset allocation</h3>
+        <div class="flex items-center gap-4"><svg viewBox="0 0 36 36" class="w-24 h-24"><circle cx="18" cy="18" r="15.9" fill="none" stroke="#22d3ee" stroke-width="4" stroke-dasharray="60 40" stroke-dashoffset="0"/><circle cx="18" cy="18" r="15.9" fill="none" stroke="#a78bfa" stroke-width="4" stroke-dasharray="25 75" stroke-dashoffset="-60"/><circle cx="18" cy="18" r="15.9" fill="none" stroke="#34d399" stroke-width="4" stroke-dasharray="10 90" stroke-dashoffset="-85"/><circle cx="18" cy="18" r="15.9" fill="none" stroke="#fbbf24" stroke-width="4" stroke-dasharray="5 95" stroke-dashoffset="-95"/></svg>
+        <div class="text-xs space-y-1 text-slate-400"><div>🟦 Stocks 60%</div><div>🟪 Bonds 25%</div><div>🟩 Cash 10%</div><div>🟨 Alt 5%</div></div></div></div>
+      <!-- 6 monte carlo dist -->
+      <div class="glass rounded-2xl p-5"><h3 class="text-sm font-semibold mb-3">6 · Monte Carlo distribution</h3>
+        <div class="flex items-end gap-0.5 h-[100px]"><div class="flex-1 bg-rose-400/70 rounded-t" style="height:12%"></div><div class="flex-1 bg-rose-400/60 rounded-t" style="height:22%"></div><div class="flex-1 bg-slate-500/60 rounded-t" style="height:45%"></div><div class="flex-1 bg-cyan-400/70 rounded-t" style="height:80%"></div><div class="flex-1 bg-cyan-400/80 rounded-t" style="height:100%"></div><div class="flex-1 bg-cyan-400/60 rounded-t" style="height:62%"></div><div class="flex-1 bg-cyan-400/40 rounded-t" style="height:35%"></div><div class="flex-1 bg-cyan-400/30 rounded-t" style="height:18%"></div></div></div>
+      <!-- 7 tax impact -->
+      <div class="glass rounded-2xl p-5"><h3 class="text-sm font-semibold mb-3">7 · Tax impact</h3>
+        <div class="flex items-end gap-2 h-[100px]"><div class="flex-1 bg-violet-400/70 rounded-t" style="height:40%"></div><div class="flex-1 bg-violet-400/70 rounded-t" style="height:70%"></div><div class="flex-1 bg-rose-400/70 rounded-t" style="height:55%"></div></div>
+        <div class="flex justify-between text-[10px] text-slate-500 mt-1"><span>Accum</span><span>Retire</span><span>Cross-border</span></div></div>
+      <!-- 8 scenario compare -->
+      <div class="glass rounded-2xl p-5"><h3 class="text-sm font-semibold mb-3">8 · Scenario comparison</h3>
+        <svg viewBox="0 0 300 120" class="w-full"><path d="M0,40 C100,55 200,80 300,100" fill="none" stroke="#34d399" stroke-width="1.8"/><path d="M0,40 C100,70 200,95 300,108" fill="none" stroke="#fbbf24" stroke-width="1.8"/><path d="M0,40 C100,85 200,108 300,112" fill="none" stroke="#fb7185" stroke-width="1.8"/></svg></div>
+      <!-- 9 readiness gauge -->
+      <div class="glass rounded-2xl p-5"><h3 class="text-sm font-semibold mb-3">9 · Readiness dashboard</h3>
+        <div class="flex items-center gap-4"><div class="relative w-20 h-20"><svg viewBox="0 0 36 36" class="-rotate-90 w-20 h-20"><circle cx="18" cy="18" r="15.9" fill="none" stroke="#1e293b" stroke-width="4"/><circle cx="18" cy="18" r="15.9" fill="none" stroke="#10b981" stroke-width="4" stroke-dasharray="82 18" stroke-linecap="round"/></svg><div class="absolute inset-0 grid place-items-center num font-bold">82</div></div><div class="text-xs text-mint-400 font-semibold">On track<br><span class="text-slate-500">all systems green</span></div></div></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ========= 6 · STRESS ========= -->
+<section class="screen">
+  <div class="border-b border-line bg-black/30"><div class="max-w-[1400px] mx-auto px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-2 font-display font-bold"><span class="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 grid place-items-center text-canvas">R</span>RetireWise</div>
+    <div class="flex items-center gap-6 text-sm"><a class="text-slate-500" href="#" onclick="show(4)">Dashboard</a><a class="text-slate-500" href="#" onclick="show(5)">Charts</a><a class="font-semibold" href="#">Stress</a><a class="text-slate-500" href="#" onclick="show(7)">Yearly</a></div>
+  </div></div>
+  <div class="bg-grad-cv"><div class="max-w-[1400px] mx-auto px-6 py-8 space-y-6">
+    <div><h1 class="font-display text-2xl font-bold">What if markets crash?</h1><p class="text-sm text-slate-400">Your plan replayed through hostile futures. Survived = money lasts to 95.</p></div>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+      <div class="glass rounded-2xl p-4 border-t-2 border-mint-400"><div class="text-[11px] uppercase text-slate-500">Normal</div><div class="num font-bold text-mint-400 mt-1">Survives</div><div class="text-xs text-slate-500">£410k left</div></div>
+      <div class="glass rounded-2xl p-4 border-t-2 border-mint-400"><div class="text-[11px] uppercase text-slate-500">−30% day one</div><div class="num font-bold text-mint-400 mt-1">Survives</div><div class="text-xs text-slate-500">£95k left</div></div>
+      <div class="glass rounded-2xl p-4 border-t-2 border-amber-400"><div class="text-[11px] uppercase text-slate-500">Crash yr 10</div><div class="num font-bold text-amber-400 mt-1">Tight</div><div class="text-xs text-slate-500">£12k left</div></div>
+      <div class="glass rounded-2xl p-4 border-t-2 border-mint-400"><div class="text-[11px] uppercase text-slate-500">Late crash</div><div class="num font-bold text-mint-400 mt-1">Survives</div><div class="text-xs text-slate-500">£180k left</div></div>
+      <div class="glass rounded-2xl p-4 border-t-2 border-rose-400"><div class="text-[11px] uppercase text-slate-500">Three crashes</div><div class="num font-bold text-rose-400 mt-1">Fails</div><div class="text-xs text-slate-500">out at 88</div></div>
+    </div>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 glass rounded-3xl p-6"><h3 class="font-semibold mb-4">Corpus under each scenario</h3>
+        <svg viewBox="0 0 600 230" class="w-full"><line x1="0" y1="200" x2="600" y2="200" stroke="#1e293b"/>
+          <path d="M0,60 C100,55 200,75 320,110 C420,140 520,175 600,190" fill="none" stroke="#34d399" stroke-width="2"/>
+          <path d="M0,60 L40,105 C140,100 260,125 380,155 C470,177 550,190 600,196" fill="none" stroke="#22d3ee" stroke-width="2"/>
+          <path d="M0,60 C90,58 160,70 200,85 L230,130 C330,160 460,185 600,198" fill="none" stroke="#fbbf24" stroke-width="2"/>
+          <path d="M0,60 C100,55 200,75 320,110 C400,133 450,148 480,175 C540,188 580,193 600,194" fill="none" stroke="#a78bfa" stroke-width="2"/>
+          <path d="M0,60 L30,95 C90,95 150,115 200,140 L230,165 C290,184 340,196 380,200 L600,200" fill="none" stroke="#fb7185" stroke-width="2"/>
+          <circle cx="380" cy="200" r="4" fill="#fb7185"/><text x="330" y="194" font-size="11" font-weight="700" fill="#fb7185">depleted · 88</text></svg>
+        <div class="flex flex-wrap gap-3 mt-3 text-xs text-slate-400"><span>🟩 Normal</span><span>🟦 −30% now</span><span>🟨 Yr-10</span><span>🟪 Late</span><span>🟥 Three crashes</span></div>
+      </div>
+      <div class="glass rounded-3xl p-6"><h3 class="font-semibold">Build your own crash</h3><p class="text-xs text-slate-500 mb-4">Or type a custom return per year.</p>
+        <div class="space-y-4 text-sm">
+          <div><label class="text-slate-300">Crash size</label><div class="flex gap-2 mt-1"><button class="flex-1 border border-line rounded-lg py-2 text-slate-400">−20%</button><button class="flex-1 rounded-lg py-2 bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold">−30%</button><button class="flex-1 border border-line rounded-lg py-2 text-slate-400">−40%</button></div></div>
+          <div><div class="flex justify-between mb-1"><label class="text-slate-300">Crash year</label><b class="num text-cyan-400">Yr 10 · age 70</b></div><input type="range" min="0" max="35" value="10" class="w-full"></div>
+          <div><label class="text-slate-300">Recovery</label><div class="flex gap-2 mt-1"><button class="flex-1 rounded-lg py-2 text-xs bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold">V-shape</button><button class="flex-1 border border-line rounded-lg py-2 text-xs text-slate-400">Slow</button><button class="flex-1 border border-line rounded-lg py-2 text-xs text-slate-400">None</button></div></div>
+          <button class="w-full bg-white text-canvas font-semibold py-2.5 rounded-xl">Run scenario</button>
+        </div>
+      </div>
+    </div>
+    <div class="glass rounded-3xl p-6"><h3 class="font-semibold mb-4">Monte Carlo — terminal balance at 95 <span class="text-slate-500 font-normal text-sm">(10,000 paths)</span></h3>
+      <div class="flex items-end gap-1 h-36"><div class="bg-rose-400/70 rounded-t w-full" style="height:9%"></div><div class="bg-rose-400/50 rounded-t w-full" style="height:14%"></div><div class="bg-slate-500/50 rounded-t w-full" style="height:26%"></div><div class="bg-slate-400/50 rounded-t w-full" style="height:48%"></div><div class="bg-cyan-400/60 rounded-t w-full" style="height:72%"></div><div class="bg-cyan-400/90 rounded-t w-full" style="height:100%"></div><div class="bg-cyan-400/80 rounded-t w-full" style="height:88%"></div><div class="bg-cyan-400/60 rounded-t w-full" style="height:64%"></div><div class="bg-cyan-400/40 rounded-t w-full" style="height:42%"></div><div class="bg-cyan-400/30 rounded-t w-full" style="height:27%"></div><div class="bg-cyan-400/20 rounded-t w-full" style="height:16%"></div><div class="bg-cyan-400/10 rounded-t w-full" style="height:8%"></div></div>
+      <div class="flex justify-between text-xs text-slate-500 mt-2"><span>Ran out 9%</span><span>Median £420k</span><span>Best £2.1M</span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ========= 7 · YEAR-BY-YEAR ========= -->
+<section class="screen">
+  <div class="border-b border-line bg-black/30"><div class="max-w-[1400px] mx-auto px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-2 font-display font-bold"><span class="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 grid place-items-center text-canvas">R</span>RetireWise</div>
+    <div class="flex items-center gap-6 text-sm"><a class="text-slate-500" href="#" onclick="show(4)">Dashboard</a><a class="text-slate-500" href="#" onclick="show(5)">Charts</a><a class="text-slate-500" href="#" onclick="show(6)">Stress</a><a class="font-semibold" href="#">Yearly</a></div>
+  </div></div>
+  <div class="bg-grad-cv"><div class="max-w-[1400px] mx-auto px-6 py-8 space-y-5">
+    <div class="flex flex-wrap items-end justify-between gap-4"><div><h1 class="font-display text-2xl font-bold">Every year, in detail</h1><p class="text-sm text-slate-400">After-tax figures.</p></div>
+      <div class="flex gap-2 text-sm"><button class="bg-panel border border-line px-4 py-2 rounded-lg">Nominal £</button><button class="bg-gradient-to-r from-cyan-500 to-violet-500 text-white px-4 py-2 rounded-lg font-semibold">Today's £</button><button class="bg-panel border border-line px-4 py-2 rounded-lg">⬇ CSV</button></div></div>
+    <div class="glass rounded-3xl overflow-x-auto">
+      <table class="w-full text-sm num min-w-[760px]">
+        <thead class="text-xs uppercase text-slate-500 text-left border-b border-line"><tr><th class="px-5 py-3">Age</th><th class="px-5 py-3">Phase</th><th class="px-5 py-3 text-right">Start</th><th class="px-5 py-3 text-right">Growth</th><th class="px-5 py-3 text-right">Saved/drawn</th><th class="px-5 py-3 text-right">Tax</th><th class="px-5 py-3 text-right">Spend</th><th class="px-5 py-3 text-right">End</th></tr></thead>
+        <tbody class="divide-y divide-line">
+          <tr><td class="px-5 py-3 font-bold">58</td><td class="px-5 py-3"><span class="bg-cyan-500/15 text-cyan-400 px-2 py-0.5 rounded-full text-xs font-semibold">Saving</span></td><td class="px-5 py-3 text-right">£1,180,400</td><td class="px-5 py-3 text-right text-mint-400">+£70,800</td><td class="px-5 py-3 text-right text-mint-400">+£28,300</td><td class="px-5 py-3 text-right text-slate-500">£19,200</td><td class="px-5 py-3 text-right text-slate-500">—</td><td class="px-5 py-3 text-right font-bold">£1,279,500</td></tr>
+          <tr><td class="px-5 py-3 font-bold">59</td><td class="px-5 py-3"><span class="bg-cyan-500/15 text-cyan-400 px-2 py-0.5 rounded-full text-xs font-semibold">Saving</span></td><td class="px-5 py-3 text-right">£1,279,500</td><td class="px-5 py-3 text-right text-mint-400">+£76,700</td><td class="px-5 py-3 text-right text-mint-400">+£29,100</td><td class="px-5 py-3 text-right text-slate-500">£19,900</td><td class="px-5 py-3 text-right text-slate-500">—</td><td class="px-5 py-3 text-right font-bold">£1,385,300</td></tr>
+          <tr class="bg-amber-400/5"><td class="px-5 py-3 font-bold">60 🎉</td><td class="px-5 py-3"><span class="bg-violet-500/15 text-violet-400 px-2 py-0.5 rounded-full text-xs font-semibold">Retired</span></td><td class="px-5 py-3 text-right">£1,385,300</td><td class="px-5 py-3 text-right text-mint-400">+£80,100</td><td class="px-5 py-3 text-right text-rose-400">−£84,600</td><td class="px-5 py-3 text-right text-slate-500">£6,900</td><td class="px-5 py-3 text-right">£77,700</td><td class="px-5 py-3 text-right font-bold">£1,380,800</td></tr>
+          <tr><td class="px-5 py-3 font-bold">67</td><td class="px-5 py-3"><span class="bg-mint-500/15 text-mint-400 px-2 py-0.5 rounded-full text-xs font-semibold">+ State pension</span></td><td class="px-5 py-3 text-right">£1,392,100</td><td class="px-5 py-3 text-right text-mint-400">+£80,400</td><td class="px-5 py-3 text-right text-rose-400">−£49,800</td><td class="px-5 py-3 text-right text-slate-500">£4,100</td><td class="px-5 py-3 text-right">£61,500</td><td class="px-5 py-3 text-right font-bold">£1,422,700</td></tr>
+          <tr><td class="px-5 py-3 font-bold">80</td><td class="px-5 py-3"><span class="bg-violet-500/15 text-violet-400 px-2 py-0.5 rounded-full text-xs font-semibold">Retired</span></td><td class="px-5 py-3 text-right">£1,089,300</td><td class="px-5 py-3 text-right text-mint-400">+£62,100</td><td class="px-5 py-3 text-right text-rose-400">−£89,400</td><td class="px-5 py-3 text-right text-slate-500">£7,300</td><td class="px-5 py-3 text-right">£82,100</td><td class="px-5 py-3 text-right font-bold">£1,062,000</td></tr>
+          <tr><td class="px-5 py-3 text-slate-500" colspan="8">⋯ 35 rows · virtualised scroll in the app ⋯</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div></div>
+</section>
+
+<!-- ========= 8 · MOBILE ========= -->
+<section class="screen">
+  <div class="bg-grad-cv min-h-screen py-10"><div class="max-w-5xl mx-auto px-6">
+    <h1 class="font-display text-2xl font-bold mb-1">Responsive — mobile layouts</h1><p class="text-sm text-slate-400 mb-8">Same design language, reflowed for phones. Bottom tab bar, stacked cards, swipeable charts.</p>
+    <div class="flex flex-wrap gap-8 justify-center">
+      <!-- phone 1: dashboard -->
+      <div class="w-[300px] rounded-[2.2rem] border-4 border-line bg-canvas overflow-hidden shadow-card">
+        <div class="bg-black/40 px-4 py-2 flex justify-between text-[10px] text-slate-400"><span>9:41</span><span>5G ▰▰▰</span></div>
+        <div class="px-4 py-4 space-y-3 h-[560px] overflow-y-auto">
+          <div class="flex items-center justify-between"><div class="font-display font-bold">Alex's plan</div><span class="w-7 h-7 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500"></span></div>
+          <div class="glass rounded-2xl p-4 text-center">
+            <div class="relative w-24 h-24 mx-auto"><svg viewBox="0 0 36 36" class="-rotate-90 w-24 h-24"><circle cx="18" cy="18" r="15.9" fill="none" stroke="#1e293b" stroke-width="4"/><circle cx="18" cy="18" r="15.9" fill="none" stroke="url(#ring)" stroke-width="4" stroke-dasharray="82 18" stroke-linecap="round"/></svg><div class="absolute inset-0 grid place-items-center"><div class="num text-2xl font-bold">82</div></div></div>
+            <div class="font-display font-bold mt-2">Retire at <span class="text-mint-400">60</span> ✓</div>
+            <div class="text-xs text-slate-400">91% success · lasts to 95</div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="glass rounded-xl p-3"><div class="text-[10px] text-slate-500 uppercase">Required</div><div class="num font-bold">£1.25M</div></div>
+            <div class="glass rounded-xl p-3"><div class="text-[10px] text-slate-500 uppercase">Projected</div><div class="num font-bold text-mint-400">£1.38M</div></div>
+            <div class="glass rounded-xl p-3"><div class="text-[10px] text-slate-500 uppercase">SWR</div><div class="num font-bold">3.7%</div></div>
+            <div class="glass rounded-xl p-3"><div class="text-[10px] text-slate-500 uppercase">Tax</div><div class="num font-bold">11%</div></div>
+          </div>
+          <div class="glass rounded-2xl p-3"><div class="text-xs font-semibold mb-2">Corpus</div><svg viewBox="0 0 260 80" class="w-full"><path d="M0,70 C60,60 110,30 150,26 C200,22 240,50 260,64" fill="none" stroke="#22d3ee" stroke-width="2"/></svg></div>
+        </div>
+        <div class="border-t border-line grid grid-cols-4 text-[10px] text-center py-2 text-slate-500"><div class="text-cyan-400">📊<br>Home</div><div>📈<br>Charts</div><div>💥<br>Stress</div><div>📅<br>Yearly</div></div>
+      </div>
+      <!-- phone 2: wizard -->
+      <div class="w-[300px] rounded-[2.2rem] border-4 border-line bg-canvas overflow-hidden shadow-card">
+        <div class="bg-black/40 px-4 py-2 flex justify-between text-[10px] text-slate-400"><span>9:41</span><span>5G ▰▰▰</span></div>
+        <div class="px-4 py-4 space-y-3 h-[560px] overflow-y-auto">
+          <div class="h-1.5 bg-white/10 rounded-full"><div class="h-1.5 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500" style="width:45%"></div></div>
+          <div class="text-[11px] text-slate-500">Step 5 of 11 · Assets</div>
+          <div class="font-display font-bold text-lg">What's saved & invested?</div>
+          <div class="glass rounded-xl p-3"><div class="text-[11px] text-slate-400 mb-2">💵 Cash & deposits</div>
+            <label class="text-[10px] text-slate-500">Savings</label><div class="ipt mt-1">£ <input value="25,000"></div></div>
+          <div class="glass rounded-xl p-3"><div class="text-[11px] text-slate-400 mb-2">📈 Investments</div>
+            <label class="text-[10px] text-slate-500">ISA / SIPP</label><div class="ipt mt-1">£ <input value="160,000"></div></div>
+          <div class="glass rounded-xl p-3 flex justify-between items-center"><span class="text-xs text-slate-400">Corpus today</span><span class="num font-bold text-cyan-400">£442k</span></div>
+          <button class="w-full bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold py-3 rounded-xl">Continue →</button>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<style>
+  .ipt{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;border:1px solid #1e293b;background:#0e1525;margin-top:4px}
+  .ipt input{background:transparent;outline:none;width:100%;color:#e2e8f0;font-family:'Space Grotesk',Inter;font-variant-numeric:tabular-nums}
+</style>
+<script>
+const order=[0,1,2,3,4,5,6,7,8];
+function show(i){
+  const s=document.querySelectorAll('.screen'); s.forEach(x=>x.classList.remove('active')); s[i].classList.add('active');
+  const b=document.querySelectorAll('.navbtn'); b.forEach(x=>x.classList.remove('active')); b[i].classList.add('active');
+  window.scrollTo(0,0);
+}
+show(1);
+</script>
+</body>
+</html>
